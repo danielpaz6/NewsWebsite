@@ -1,44 +1,205 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Bootstrap 4 Magazine/Blog Theme">
+    <meta name="author" content="Bootlab">
+    <title>@ViewBag.Title - News Website</title>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/script")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css2")
+    @Styles.Render("~/Content/css3")
+</head>
+<body>
+    <header role="banner">
+        <nav class="navbar navbar-expand-md navbar-light bg-white absolute-top">
+            <div class="container">
+                <button class="navbar-toggler order-2 order-md-1" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse order-3 order-md-2" id="navbar">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" href="https://milo.bootlab.io/home-fullwidth.html#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown02">
+                                <a class="dropdown-item" href="#">One column</a>
+                                <a class="dropdown-item" href="#">Two column</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Posts</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown02">
+                                <a class="dropdown-item" href="#">Image</a>
+                                <a class="dropdown-item" href="#">Video</a>
+                                <a class="dropdown-item" href="#">New story</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Components</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="#">Typography</a>
+                                <a class="dropdown-item" href="#">Buttons</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <a class="navbar-brand mx-auto order-1 order-md-3" href="#">papør.io</a>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </nav>
+    </header>
+    <main class="main pt-4" role="main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-9">
+                    @RenderBody()
+                </div>
+                <div class="col-md-3 ml-auto">
+                    <aside class="sidebar">
+                        <div class="card mb-4" style="border: 0;">
+                            <div class="card-body">
+                                <h4 class="card-title">About</h4>
+                                <p class="card-text">Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam <a href="https://milo.bootlab.io/home-fullwidth.html#">semper libero</a>, sit amet adipiscing sem neque sed ipsum. </p>
+                            </div>
+                        </div><!-- /.card -->
+                    </aside>
+                    <aside class="sidebar sidebar-sticky">
+                        <div class="card mb-4" style="border: 0;">
+                            <div class="card-body">
+                                <h4 class="card-title">Tags</h4>
+                                <a class="btn btn-light btn-sm mb-1" href="#">Journey</a>
+                                <a class="btn btn-light btn-sm mb-1" href="#">Work</a>
+                                <a class="btn btn-light btn-sm mb-1" href="#">Lifestype</a>
+                                <a class="btn btn-light btn-sm mb-1" href="#">Photography</a>
+                                <a class="btn btn-light btn-sm mb-1" href="#">Food &amp; Drinks</a>
+                            </div>
+                        </div><!-- /.card -->
+                        <div class="card mb-4" style="border: 0;">
+                            <div class="card-body">
+                                <h4 class="card-title">Popular stories</h4>
+                                <a href="#" class="d-inline-block">
+                                    <h4 class="h6">The blind man</h4>
+                                    <img class="card-img" src="./Milo - Magazine_Blog Theme_files/2.jpg" alt="">
+                                </a>
+                                <time class="timeago" datetime="2017-10-03 20:00" data-tid="7">1 year ago</time> in Lifestyle
+
+                                <a href="#" class="d-inline-block mt-3">
+                                    <h4 class="h6">Crying on the news</h4>
+                                    <img class="card-img" src="./Milo - Magazine_Blog Theme_files/3.jpg" alt="">
+                                </a>
+                                <time class="timeago" datetime="2017-07-16 20:00" data-tid="8">2 years ago</time> in Work
+                            </div>
+                        </div><!-- /.card -->
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="site-newsletter">
+        <div class="container">
+            <div class="text-center">
+                <h3 class="h4 mb-2">Subscribe to our newsletter</h3>
+                <p class="text-muted">Join our monthly newsletter and never miss out on new stories and promotions.</p>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-9 col-md-7 col-lg-5 ml-auto mr-auto">
+                        <div class="input-group mb-3 mt-3">
+                            <input type="text" class="form-control" placeholder="Email address" aria-label="Email address">
+                            <span class="input-group-btn">
+                                <button class="btn btn-secondary" type="button">Subscribe</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="site-instagram">
+        <div class="action">
+            <a class="btn btn-light" href="#">
+                Follow us at Instagram
+            </a>
+        </div>
+        <div class="row no-gutters">
+            <div class="col-sm-6">
+                <div class="row no-gutters">
+                    <div class="col-3">
+                        <a class="photo" href="#">
+                            <img class="img-fluid" src="..." alt="">
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a class="photo" href="#">
+                            <img class="img-fluid" src="..." alt="">
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a class="photo" href="#">
+                            <img class="img-fluid" src="..." alt="">
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a class="photo" href="#">
+                            <img class="img-fluid" src="..." alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row no-gutters">
+                    <div class="col-3">
+                        <a class="photo" href="#">
+                            <img class="img-fluid" src="..." alt="">
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a class="photo" href="#">
+                            <img class="img-fluid" src="..." alt="">
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a class="photo" href="#">
+                            <img class="img-fluid" src="..." alt="">
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a class="photo" href="#">
+                            <img class="img-fluid" src="..." alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="site-footer bg-darkest" role="contentinfo">
+        <div class="container">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Privacy policy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Terms</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Feedback</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Advertise</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+            <div class="copy">
+                © Papor.io @DateTime.Now.Year<br>
+                All rights reserved
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

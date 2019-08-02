@@ -54,15 +54,15 @@ namespace NewsWebsite
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "2071324922974093",
+               appSecret: "8beb65c2a2301c0f3cfef15644ce05e7");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "176382826889-m339ntk9vneucr6ij0mfi4ur665j1ipb.apps.googleusercontent.com",
+                ClientSecret = "TokfwSXEWV9-Q48DSGV7pKkX"
+            });
         }
     }
 }
