@@ -15,6 +15,7 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/css2")
     @Styles.Render("~/Content/css3")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     <header role="banner">
@@ -50,7 +51,7 @@
                     </ul>
                 </div>
                 <a class="navbar-brand mx-auto order-1 order-md-3" href="#">papør.io</a>
-                @Html.Partial("_LoginPartial")
+                @Html.Partial("~/Views/Shared/_LoginPartial.cshtml", new NewsWebsite.Models.LoginRegister())
             </div>
         </nav>
     </header>
@@ -201,5 +202,6 @@
             </div>
         </div>
     </footer>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

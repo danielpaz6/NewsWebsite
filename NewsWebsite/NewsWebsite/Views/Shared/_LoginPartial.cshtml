@@ -1,4 +1,9 @@
 ﻿@using Microsoft.AspNet.Identity
+@using NewsWebsite.Models
+@*model Tuple<NewsWebsite.Models.RegisterViewModel, NewsWebsite.Models.LoginViewModel>*@
+@model LoginRegister
+
+
 <div class="collapse navbar-collapse order-4 order-md-4" id="navbar">
     @if (!Request.IsAuthenticated)
     {
@@ -12,7 +17,7 @@
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content" style="border-radius: 0.25em;">
                     <div class="modal-header">
                         <h5 class="modal-title fixed-font" id="exampleModalLabel">Connection Panel</h5>
                         <button type="button" class="close fixed-btn" data-dismiss="modal" aria-label="Close">
@@ -21,56 +26,103 @@
                     </div>
                     <div class="modal-body">
                         <article style="display: none;" class="card-body" id="signup_panel">
-                            <a href="#" class="float-right btn btn-outline-primary fixed-btn" id="signin">Sign in</a>
+                            <a href="#" class="float-right btn btn-outline-primary fixed-btn fixed-btn-overall" id="signin">Sign in</a>
                             <h4 class="card-title mb-4 mt-1 fixed-font">Sign up</h4>
-                            <form action="/Home/register" method="post">
+
+                            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
                                 <div class="form-group">
-                                    <input name="name" class="form-control" placeholder="Nickname" type="text">
-                                </div> <!-- form-group// -->
+                                    @Html.TextBoxFor(m => m.Item1.Email, new { @class = "fixed-form-control", placeholder = "Email" })
+                                </div>
                                 <div class="form-group">
-                                    <input name="email" class="form-control" placeholder="Email" type="email">
-                                </div> <!-- form-group// -->
+                                    @Html.PasswordFor(m => m.Item1.Password, new { @class = "fixed-form-control", placeholder = "Password" })
+                                </div>
                                 <div class="form-group">
-                                    <input name="password" class="form-control" placeholder="******" type="password">
-                                </div> <!-- form-group// -->
+                                    @Html.PasswordFor(m => m.Item1.ConfirmPassword, new { @class = "fixed-form-control", placeholder = "Confrim Password" })
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-block fixed-btn"> Register  </button>
-                                        </div> <!-- form-group// -->
+                                            <input type="submit" value="Register" class="btn btn-primary btn-block fixed-btn-overall" />
+                                        </div>
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        <!--<a class="small" href="#">Forgot password?</a>-->
+                                        <a class="small" href="#">Login via Social Media</a>
                                     </div>
-                                </div> <!-- .row// -->
-                            </form>
+                                </div>
+                            }
+
+
+                            @*<form action="/Home/register" method="post">
+            <div class="form-group">
+                <input name="name" class="form-control" placeholder="Nickname" type="text">
+            </div> <!-- form-group// -->
+            <div class="form-group">
+                <input name="email" class="form-control" placeholder="Email" type="email">
+            </div> <!-- form-group// -->
+            <div class="form-group">
+                <input name="password" class="form-control" placeholder="******" type="password">
+            </div> <!-- form-group// -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block fixed-btn-overall"> Register  </button>
+                    </div> <!-- form-group// -->
+                </div>
+                <div class="col-md-6 text-right">
+                    <!--<a class="small" href="#">Forgot password?</a>-->
+                </div>
+            </div> <!-- .row// -->
+        </form>*@
                         </article>
                         <article class="card-body" id="signin_panel">
-                            <a href="#" class="float-right btn btn-outline-primary fixed-btn" id="signup">Sign up</a>
-                            <h4 class="card-title mb-4 mt-1 fixed-font">Sign in</h4>
+                            <a href="#" class="float-right btn btn-outline-primary fixed-btn-overall" id="signup">Sign up</a>
+                            <h4 class="card-title mb-4 mt-1 fixed-font fixed-weight">Sign in</h4>
                             <p>
-                                <a href="" class="btn btn-block btn-outline-info fixed-btn"> <i class="fab fa-twitter"></i> Login via Twitter</a>
-                                <a href="" class="btn btn-block btn-outline-primary fixed-btn"> <i class="fab fa-facebook-f"></i> Login via facebook</a>
+                                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                                <!--<a href="" class="btn btn-block btn-outline-info fixed-btn"> <i class="fab fa-twitter"></i> Login via Twitter</a>
+                                <a href="" class="btn btn-block btn-outline-primary fixed-btn"> <i class="fab fa-facebook-f"></i> Login via facebook</a>-->
                             </p>
                             <hr>
-                            <form>
+                            <!-- ------------------------------------------------------------------ -->
+
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="form-group">
-                                    <input name="" class="form-control" placeholder="Email or login" type="email">
-                                </div> <!-- form-group// -->
+                                    @Html.TextBoxFor(m => m.Item2.Email, new { @class = "fixed-form-control", placeholder = "Email or login" })
+                                    @Html.ValidationMessageFor(m => m.Item2.Email, "", new { @class = "text-danger" })
+                                </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="******" type="password">
-                                </div> <!-- form-group// -->
+                                    @Html.PasswordFor(m => m.Item2.Password, new { @class = "fixed-form-control", placeholder = "******" })
+                                    @Html.ValidationMessageFor(m => m.Item2.Password, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <div class="checkbox">
+                                            @Html.LabelFor(m => m.Item2.RememberMe)
+                                        </div>
+                                    </div>
+                                    <label class="switch text-right">
+                                        <input class="default" data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" type="checkbox" value="true">
+                                        <span class="slider"></span>
+                                        <input name="RememberMe" type="hidden" value="false">
+                                    </label>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-block fixed-btn"> Login  </button>
-                                        </div> <!-- form-group// -->
+                                            <input type="submit" value="Login" class="btn btn-primary btn-block fixed-btn-overall" />
+                                        </div>
                                     </div>
                                     <div class="col-md-6 text-right">
                                         <a class="small" href="#">Forgot password?</a>
                                     </div>
-                                </div> <!-- .row// -->
-                            </form>
+                                </div>
+                            }
+                            <!-- ------------------------------------------------------------------ -->
                         </article>
                     </div>
                 </div>
@@ -80,19 +132,29 @@
     }
     else
     {
-        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-        {
-            @Html.AntiForgeryToken()
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                </li>
-                <li class="nav-item"><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-            </ul>
-        }
+        <ul class="navbar-nav ml-auto">
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            {
+                @Html.AntiForgeryToken()
+                <ul class="navbar-nav ml-auto">
+                    <!--<li class="nav-item"><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.GetUserName()</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown02">
+                            @Html.ActionLink("My Profile", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
+                            <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                        </div>
+                    </li>
+                </ul>
+            }
+        </ul>
     }
 
     <form class="form-inline" role="search">
         <input class="search js-search form-control form-control-rounded mr-sm-2" type="text" title="Enter search query here.." placeholder="Search.." aria-label="Search">
     </form>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
