@@ -148,9 +148,8 @@ namespace NewsWebsite.Controllers
             c.Name = "blue";
             c.CategoryId = 0;
 
-            ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext()
-                .GetUserManager<ApplicationUserManager>()
-                .FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            var userId = User.Identity.GetUserId();
+            ApplicationUser user = db.Users.SingleOrDefault(x => x.Id.Equals(userId));
 
             foreach (string[] str in lst)
             {
@@ -181,9 +180,8 @@ namespace NewsWebsite.Controllers
             c.Name = "blue";
             c.CategoryId = 0;
 
-            ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext()
-                .GetUserManager<ApplicationUserManager>()
-                .FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            var userId = User.Identity.GetUserId();
+            ApplicationUser user = db.Users.SingleOrDefault(x => x.Id.Equals(userId));
 
             foreach (string[] str in lst)
             {
@@ -213,9 +211,8 @@ namespace NewsWebsite.Controllers
             c.Name = "blue";
             c.CategoryId = 0;
 
-            ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext()
-                .GetUserManager<ApplicationUserManager>()
-                .FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            var userId = User.Identity.GetUserId();
+            ApplicationUser user = db.Users.SingleOrDefault(x => x.Id.Equals(userId));
 
             foreach (string[] str in lst)
             {

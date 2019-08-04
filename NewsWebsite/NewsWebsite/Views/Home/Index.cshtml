@@ -3,11 +3,7 @@
 @{
     ViewBag.Title = "Home Page";
     int count = 0;
-    try
-    {
-        count = Model.Count();
-    }
-    catch (Exception e) { }
+    count = Model.Count();
 }
 
 
@@ -19,8 +15,8 @@
             <div class="card">
                 <img class="card-img-top img-fluid" src="@Html.DisplayFor(modelItem => item.ImageLink)" alt="Card image cap">
                 <div class="card-block">
-                    <h5 class="card-title fixed-font">Card title that wraps to a new line</h5>
-                    <p class="card-text fixed-fontsize">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <h5 class="card-title fixed-font">@Html.DisplayFor(modelItem => item.Title)</h5>
+                    <p class="card-text fixed-fontsize">@Html.DisplayFor(modelItem => item.Description)</p>
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">Last updated 3 mins ago</small>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NewsWebsite.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +10,12 @@ namespace NewsWebsite.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public ActionResult Index()
         {
-            return View();
+            var articles = db.Articles;
+            return View(articles);
         }
 
         public ActionResult About()
