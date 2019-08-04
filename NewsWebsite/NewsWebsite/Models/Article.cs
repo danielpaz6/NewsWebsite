@@ -16,7 +16,7 @@ namespace NewsWebsite.Models
         public string ArticleLink { get; set; }
         public Category Category { get; set; }
         public int CategoryId { get; set; }
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         public string shortString(string input, int limit)
         {

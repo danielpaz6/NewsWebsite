@@ -149,6 +149,7 @@ namespace NewsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            System.Diagnostics.Debug.WriteLine("Email: " + model.Email);
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };

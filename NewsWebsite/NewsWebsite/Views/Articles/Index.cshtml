@@ -35,35 +35,68 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumOfLikes)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageLink)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ArticleLink)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ArticleId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ArticleId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ArticleId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumOfLikes)
+            </td>
+            <td>
+                <img src="@Html.DisplayFor(modelItem => item.ImageLink)" width="60px" height="60px" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArticleLink)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ArticleId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ArticleId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ArticleId })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<!--<h3>Add articles from other sources</h3>-->
+
+<div class="card-group">
+    <div class="card text-center">
+        <div class="card-block">
+            <h4 class="card-title fixed-font">Ynet News RSS</h4>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+        <div class="card-footer">
+            <a href="/Articles/YNET_News" class="btn btn-primary">Add Articles</a>
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-block">
+            <h4 class="card-title fixed-font">CNN News RSS</h4>
+            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        </div>
+        <div class="card-footer">
+            <a href="/Articles/CNN_News" class="btn btn-primary">Add Articles</a>
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-block">
+            <h4 class="card-title fixed-font">Fox News RSS</h4>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+        </div>
+        <div class="card-footer">
+            <a href="/Articles/FOX_News" class="btn btn-primary">Add Articles</a>
+        </div>
+    </div>
+</div>

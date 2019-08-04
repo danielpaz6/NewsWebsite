@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NewsWebsite.Models;
+using NewsWebsite.Extensions;
 
 namespace NewsWebsite.Controllers
 {
@@ -15,9 +16,16 @@ namespace NewsWebsite.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Categories
-        public ActionResult Index()
+        public ActionResult Index(string searchText)
         {
-            return View(db.Categories.ToList());
+            var categories = from m in db.Categories select m;
+
+            if(!String.IsNullOrEmpty(searchText))
+            {
+                categories = categories.Where(s => s.Name.Contains(searchText));
+            }
+            //return View(db.Categories.ToList());
+            return View(categories.ToList());
         }
 
         // GET: Categories/Details/5
@@ -48,11 +56,14 @@ namespace NewsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CategoryId,Name,Color")] Category category)
         {
-            if (ModelState.IsValid)
+            if (Request.IsAuthenticated && User.Identity.GetPermission() != 0) // Checks if the user is logged in and has access
             {
-                db.Categories.Add(category);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Categories.Add(category);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(category);
@@ -80,12 +91,16 @@ namespace NewsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CategoryId,Name,Color")] Category category)
         {
-            if (ModelState.IsValid)
+            if (Request.IsAuthenticated && User.Identity.GetPermission() != 0) // Checks if the user is logged in and has access
             {
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(category).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+
             return View(category);
         }
 
@@ -109,9 +124,13 @@ namespace NewsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
-            db.SaveChanges();
+            if (Request.IsAuthenticated && User.Identity.GetPermission() != 0) // Checks if the user is logged in and has access
+            {
+                Category category = db.Categories.Find(id);
+                db.Categories.Remove(category);
+                db.SaveChanges();
+            }
+
             return RedirectToAction("Index");
         }
 

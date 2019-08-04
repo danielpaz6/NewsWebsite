@@ -76,6 +76,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -202,6 +203,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -213,10 +215,15 @@
     <Compile Include="Migrations\201907311810392_init2.Designer.cs">
       <DependentUpon>201907311810392_init2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908041424202_Permission.cs" />
+    <Compile Include="Migrations\201908041424202_Permission.Designer.cs">
+      <DependentUpon>201908041424202_Permission.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\GetNews.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Like.cs" />
     <Compile Include="Models\LoginRegister.cs" />
@@ -324,6 +331,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907311810392_init2.resx">
       <DependentUpon>201907311810392_init2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908041424202_Permission.resx">
+      <DependentUpon>201908041424202_Permission.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

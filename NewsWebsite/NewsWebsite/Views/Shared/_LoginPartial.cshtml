@@ -80,7 +80,7 @@
                             <a href="#" class="float-right btn btn-outline-primary fixed-btn-overall" id="signup">Sign up</a>
                             <h4 class="card-title mb-4 mt-1 fixed-font fixed-weight">Sign in</h4>
                             <p>
-                                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                                @Html.Partial("~/Views/Home/_ExternalLoginsListPartial.cshtml", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
                                 <!--<a href="" class="btn btn-block btn-outline-info fixed-btn"> <i class="fab fa-twitter"></i> Login via Twitter</a>
                                 <a href="" class="btn btn-block btn-outline-primary fixed-btn"> <i class="fab fa-facebook-f"></i> Login via facebook</a>-->
                             </p>
