@@ -13,6 +13,7 @@ namespace NewsWebsite.Models
     {
         [DefaultValue(0)]
         public int Permission { get; set; }
+        public ICollection<Article> Articles { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -35,7 +36,7 @@ namespace NewsWebsite.Models
         public DbSet<Article> Articles { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<View> Views { get; set; }
-        public DbSet<Like> Likes { get; set; }
+        public DbSet<Like> Likes { get; set; } 
 
         public static ApplicationDbContext Create()
         {
