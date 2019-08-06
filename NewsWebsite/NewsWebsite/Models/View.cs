@@ -11,5 +11,6 @@ namespace NewsWebsite.Models
         public int ArticleId { get; set; }
         public Article Article { get; set; }
         public ApplicationUser User { get; set; }
+        public DateTime WatchDate { get; set; }
     }
 }
