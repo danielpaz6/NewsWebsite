@@ -8,4 +8,5 @@
         $("#signup_panel").hide();
         $("#signin_panel").show();
     });
+
 });

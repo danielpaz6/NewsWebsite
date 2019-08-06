@@ -56,6 +56,9 @@ namespace NewsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ArticleId,Title,Description,Date,NumOfLikes,ImageLink,ArticleLink,CategoryId")] Article article)
         {
+            if (!Request.IsAuthenticated || User.Identity.GetPermission() == 0) // Checks if the user is logged in and has access
+                return View();
+
             if (ModelState.IsValid)
             {
                 db.Articles.Add(article);
@@ -90,6 +93,9 @@ namespace NewsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ArticleId,Title,Description,Date,NumOfLikes,ImageLink,ArticleLink,CategoryId")] Article article)
         {
+            if (!Request.IsAuthenticated || User.Identity.GetPermission() == 0) // Checks if the user is logged in and has access
+                return View();
+
             if (ModelState.IsValid)
             {
                 db.Entry(article).State = EntityState.Modified;
@@ -120,6 +126,9 @@ namespace NewsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!Request.IsAuthenticated || User.Identity.GetPermission() == 0) // Checks if the user is logged in and has access
+                return View();
+
             Article article = db.Articles.Find(id);
             db.Articles.Remove(article);
             db.SaveChanges();
@@ -162,6 +171,7 @@ namespace NewsWebsite.Controllers
                 a.Title = str[0];
                 a.User = user;
                 a.NumOfLikes = 0;
+                a.Source = "CNN";
                 Create(a);
             }
 
@@ -194,7 +204,7 @@ namespace NewsWebsite.Controllers
                 a.Title = str[0];
                 a.User = user;
                 a.NumOfLikes = 0;
-
+                a.Source = "FOX";
                 this.Create(a);
             }
         }
@@ -225,6 +235,7 @@ namespace NewsWebsite.Controllers
                 a.Title = str[0];
                 a.User = user;
                 a.NumOfLikes = 0;
+                a.Source = "YNET";
                 this.Create(a);
             }
         }

@@ -19,7 +19,7 @@
                     <p class="card-text fixed-fontsize">@Html.DisplayFor(modelItem => item.Description)</p>
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">Last updated 3 mins ago</small>
+                    <small class="text-muted">@item.lastUpdated(item.Date)</small>
                 </div>
             </div>
         }

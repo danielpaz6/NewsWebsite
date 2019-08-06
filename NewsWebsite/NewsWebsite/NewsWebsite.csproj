@@ -203,6 +203,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -218,6 +219,10 @@
     <Compile Include="Migrations\201908041424202_Permission.cs" />
     <Compile Include="Migrations\201908041424202_Permission.Designer.cs">
       <DependentUpon>201908041424202_Permission.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908051210216_ArticleSource.cs" />
+    <Compile Include="Migrations\201908051210216_ArticleSource.Designer.cs">
+      <DependentUpon>201908051210216_ArticleSource.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -244,6 +249,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Resources\favicon.ico" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -308,6 +314,7 @@
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -334,6 +341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908041424202_Permission.resx">
       <DependentUpon>201908041424202_Permission.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908051210216_ArticleSource.resx">
+      <DependentUpon>201908051210216_ArticleSource.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

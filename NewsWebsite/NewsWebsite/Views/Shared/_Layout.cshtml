@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+@using NewsWebsite.Models
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -6,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Responsive Bootstrap 4 Magazine/Blog Theme">
+    <link rel="shortcut icon" type="image/x-icon" href="/Resources/favicon.ico" />
     <meta name="author" content="Bootlab">
     <title>@ViewBag.Title - News Website</title>
 
@@ -29,28 +32,27 @@
                         <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="https://milo.bootlab.io/home-fullwidth.html#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown02">
-                                <a class="dropdown-item" href="#">One column</a>
-                                <a class="dropdown-item" href="#">Two column</a>
+                                <a class="dropdown-item" href="#">Default Layout</a>
+                                <a class="dropdown-item" href="#">Clean Layout</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Posts</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown02">
                                 <a class="dropdown-item" href="#">Image</a>
                                 <a class="dropdown-item" href="#">Video</a>
                                 <a class="dropdown-item" href="#">New story</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Components</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown03">
-                                <a class="dropdown-item" href="#">Typography</a>
-                                <a class="dropdown-item" href="#">Buttons</a>
-                            </div>
-                        </li>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Search/Index">Search</a>
+                            </li>
+                        }
                     </ul>
                 </div>
-                <a class="navbar-brand mx-auto order-1 order-md-3" href="#">papør.io</a>
+                <a class="navbar-brand mx-auto order-1 order-md-3" href="/Home/Index">papør.io</a>
                 @Html.Partial("~/Views/Shared/_LoginPartial.cshtml", new NewsWebsite.Models.LoginRegister())
             </div>
         </nav>

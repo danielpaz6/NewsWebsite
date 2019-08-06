@@ -1,102 +1,118 @@
 ﻿@model IEnumerable<NewsWebsite.Models.Article>
+@using NewsWebsite.Extensions;
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Category.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NumOfLikes)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImageLink)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ArticleLink)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
+@if (!Request.IsAuthenticated)
+{
+    <span>Sorry, you must login in order to access this page.</span>
+}
+else
+{
+    if (User.Identity.GetPermission() == 0)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumOfLikes)
-            </td>
-            <td>
-                <img src="@Html.DisplayFor(modelItem => item.ImageLink)" width="60px" height="60px" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArticleLink)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ArticleId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ArticleId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ArticleId })
-            </td>
-        </tr>
+        <span>Sorry, you don't have access to reach this page.</span>
     }
+    else
+    {
 
-</table>
+        <h2>Index</h2>
 
-<!--<h3>Add articles from other sources</h3>-->
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumOfLikes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImageLink)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ArticleLink)
+                </th>
+                <th></th>
+            </tr>
 
-<div class="card-group">
-    <div class="card text-center">
-        <div class="card-block">
-            <h4 class="card-title fixed-font">Ynet News RSS</h4>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        @item.shortString(item.Title, 40)
+                    </td>
+                    <td>
+                        @item.shortString(item.Description, 40)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumOfLikes)
+                    </td>
+                    <td>
+                        <img src="@Html.DisplayFor(modelItem => item.ImageLink)" width="60px" height="60px" />
+                    </td>
+                    <td>
+                        <a href="@Html.DisplayFor(modelItem => item.ArticleLink)">Link</a>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ArticleId }) <br />
+                        @Html.ActionLink("Details", "Details", new { id = item.ArticleId }) <br />
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ArticleId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        <!--<h3>Add articles from other sources</h3>-->
+
+        <div class="card-group">
+            <div class="card text-center">
+                <div class="card-block">
+                    <h4 class="card-title fixed-font">Ynet News RSS</h4>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/Articles/YNET_News" class="btn btn-primary">Add Articles</a>
+                </div>
+            </div>
+            <div class="card text-center">
+                <div class="card-block">
+                    <h4 class="card-title fixed-font">CNN News RSS</h4>
+                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/Articles/CNN_News" class="btn btn-primary">Add Articles</a>
+                </div>
+            </div>
+            <div class="card text-center">
+                <div class="card-block">
+                    <h4 class="card-title fixed-font">Fox News RSS</h4>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/Articles/FOX_News" class="btn btn-primary">Add Articles</a>
+                </div>
+            </div>
         </div>
-        <div class="card-footer">
-            <a href="/Articles/YNET_News" class="btn btn-primary">Add Articles</a>
-        </div>
-    </div>
-    <div class="card text-center">
-        <div class="card-block">
-            <h4 class="card-title fixed-font">CNN News RSS</h4>
-            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-        </div>
-        <div class="card-footer">
-            <a href="/Articles/CNN_News" class="btn btn-primary">Add Articles</a>
-        </div>
-    </div>
-    <div class="card text-center">
-        <div class="card-block">
-            <h4 class="card-title fixed-font">Fox News RSS</h4>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-        </div>
-        <div class="card-footer">
-            <a href="/Articles/FOX_News" class="btn btn-primary">Add Articles</a>
-        </div>
-    </div>
-</div>
+    }
+}
