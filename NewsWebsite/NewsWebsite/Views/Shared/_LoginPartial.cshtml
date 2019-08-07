@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @using NewsWebsite.Models
+@using NewsWebsite.Extensions
 @*model Tuple<NewsWebsite.Models.RegisterViewModel, NewsWebsite.Models.LoginViewModel>*@
 @model LoginRegister
 
@@ -55,26 +56,26 @@
 
 
                             @*<form action="/Home/register" method="post">
-            <div class="form-group">
-                <input name="name" class="form-control" placeholder="Nickname" type="text">
-            </div> <!-- form-group// -->
-            <div class="form-group">
-                <input name="email" class="form-control" placeholder="Email" type="email">
-            </div> <!-- form-group// -->
-            <div class="form-group">
-                <input name="password" class="form-control" placeholder="******" type="password">
-            </div> <!-- form-group// -->
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block fixed-btn-overall"> Register  </button>
-                    </div> <!-- form-group// -->
-                </div>
-                <div class="col-md-6 text-right">
-                    <!--<a class="small" href="#">Forgot password?</a>-->
-                </div>
-            </div> <!-- .row// -->
-        </form>*@
+                                    <div class="form-group">
+                                        <input name="name" class="form-control" placeholder="Nickname" type="text">
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group">
+                                        <input name="email" class="form-control" placeholder="Email" type="email">
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group">
+                                        <input name="password" class="form-control" placeholder="******" type="password">
+                                    </div> <!-- form-group// -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary btn-block fixed-btn-overall"> Register  </button>
+                                            </div> <!-- form-group// -->
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <!--<a class="small" href="#">Forgot password?</a>-->
+                                        </div>
+                                    </div> <!-- .row// -->
+                                </form>*@
                         </article>
                         <article class="card-body" id="signin_panel">
                             <a href="#" class="float-right btn btn-outline-primary fixed-btn-overall" id="signup">Sign up</a>
@@ -142,6 +143,11 @@
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.GetUserName()</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown02">
                             @Html.ActionLink("My Profile", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
+                            @if (User.Identity.GetPermission() != 0)
+                            {
+                                <a class="dropdown-item" href="/Categories/Index">Manage Categories</a>
+                                <a class="dropdown-item" href="/Articles/Index">Manage Articles</a>
+                            }
                             <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
                         </div>
                     </li>

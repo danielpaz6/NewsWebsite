@@ -224,15 +224,33 @@
     <Compile Include="Migrations\201908051210216_ArticleSource.Designer.cs">
       <DependentUpon>201908051210216_ArticleSource.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908061207206_ViewDate.cs" />
+    <Compile Include="Migrations\201908061207206_ViewDate.Designer.cs">
+      <DependentUpon>201908061207206_ViewDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908061317263_User_LastUpdate.cs" />
+    <Compile Include="Migrations\201908061317263_User_LastUpdate.Designer.cs">
+      <DependentUpon>201908061317263_User_LastUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908061433557_LastUpdate.cs" />
+    <Compile Include="Migrations\201908061433557_LastUpdate.Designer.cs">
+      <DependentUpon>201908061433557_LastUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908071528315_userstats.cs" />
+    <Compile Include="Migrations\201908071528315_userstats.Designer.cs">
+      <DependentUpon>201908071528315_userstats.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\DistributionByCategory.cs" />
     <Compile Include="Models\GetNews.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Like.cs" />
     <Compile Include="Models\LoginRegister.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PaginatedList.cs" />
     <Compile Include="Models\View.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -344,6 +362,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908051210216_ArticleSource.resx">
       <DependentUpon>201908051210216_ArticleSource.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908061207206_ViewDate.resx">
+      <DependentUpon>201908061207206_ViewDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908061317263_User_LastUpdate.resx">
+      <DependentUpon>201908061317263_User_LastUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908061433557_LastUpdate.resx">
+      <DependentUpon>201908061433557_LastUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908071528315_userstats.resx">
+      <DependentUpon>201908071528315_userstats.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

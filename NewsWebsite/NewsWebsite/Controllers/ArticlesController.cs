@@ -18,13 +18,21 @@ namespace NewsWebsite.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Articles
-        public ActionResult Index(string searchText)
+        public ActionResult Index(string searchText, int? pageNumber)
         {
             //var articles = from m in db.Articles select m
+            int pageSize = 20;
 
-           var articles = db.Articles.Include(a => a.Category);
+            if (searchText != null)
+            {
+                pageNumber = 1;
+            }
 
-           return View(articles.ToList());
+            ViewBag.Categories = db.Categories.ToList();
+            var articles = db.Articles.Include(a => a.Category);
+
+           return View(PaginatedList<Article>.Create(articles, pageNumber ?? 1, pageSize));
+           //return View(articles.ToList());
         }
 
         // GET: Articles/Details/5
@@ -145,23 +153,35 @@ namespace NewsWebsite.Controllers
         }
 
         // News from other resources
-        public string CNN_News()
+        [HttpPost]
+        public ActionResult CNN_News(int cat, int amount)
         {
+            ViewBag.Errors = new List<String>();
             if (!Request.IsAuthenticated || User.Identity.GetPermission() == 0) // Checks if the user is logged in and has access
-                return "Not logged in";
+                ViewBag.Errors.Add("Not logged in");
+
+            Category c = db.Categories.SingleOrDefault(x => x.CategoryId == cat);
+            if (c == null)
+                ViewBag.Errors.Add("Not valid category.");
+
+            if (amount < 5 || amount > 50)
+                ViewBag.Errors.Add("not a valid amount");
+
+            if (ViewBag.Errors.Count > 0)
+                return RedirectToAction("Index");
 
             GetNews gn = new GetNews();
             List<string[]> lst = gn.Add_CNN_News();
-            Category c = new Category();
-            c.Color = "blue";
-            c.Name = "blue";
-            c.CategoryId = 0;
 
             var userId = User.Identity.GetUserId();
             ApplicationUser user = db.Users.SingleOrDefault(x => x.Id.Equals(userId));
 
+            int count = 0;
             foreach (string[] str in lst)
             {
+                if (count++ >= amount)
+                    break;
+
                 Article a = new Article();
                 a.ArticleLink = str[2];
                 a.Category = c;
@@ -172,29 +192,43 @@ namespace NewsWebsite.Controllers
                 a.User = user;
                 a.NumOfLikes = 0;
                 a.Source = "CNN";
-                Create(a);
+
+                if(!db.Articles.Any(x => x.ArticleLink.Equals(a.ArticleLink))) // checks if the article is already exists
+                    Create(a);
             }
 
-            return "Done.";
+            return RedirectToAction("Index");
         }
 
-        public void FOX_News()
+        [HttpPost]
+        public ActionResult FOX_News(int cat, int amount)
         {
+            ViewBag.Errors = new List<String>();
             if (!Request.IsAuthenticated || User.Identity.GetPermission() == 0) // Checks if the user is logged in and has access
-                return;
+                ViewBag.Errors.Add("Not logged in");
+
+            Category c = db.Categories.SingleOrDefault(x => x.CategoryId == cat);
+            if (c == null)
+                ViewBag.Errors.Add("Not valid category.");
+
+            if (amount < 5 || amount > 50)
+                ViewBag.Errors.Add("not a valid amount");
+
+            if (ViewBag.Errors.Count > 0)
+                return RedirectToAction("Index");
 
             GetNews gn = new GetNews();
             List<string[]> lst = gn.Add_FOX_News();
-            Category c = new Category();
-            c.Color = "blue";
-            c.Name = "blue";
-            c.CategoryId = 0;
 
             var userId = User.Identity.GetUserId();
             ApplicationUser user = db.Users.SingleOrDefault(x => x.Id.Equals(userId));
 
+            int count = 0;
             foreach (string[] str in lst)
             {
+                if (count++ >= amount)
+                    break;
+
                 Article a = new Article();
                 a.ArticleLink = str[2];
                 a.Category = c;
@@ -205,27 +239,43 @@ namespace NewsWebsite.Controllers
                 a.User = user;
                 a.NumOfLikes = 0;
                 a.Source = "FOX";
-                this.Create(a);
+
+                if (!db.Articles.Any(x => x.ArticleLink.Equals(a.ArticleLink))) // checks if the article is already exists
+                    Create(a);
             }
+
+            return RedirectToAction("Index");
         }
 
-        public void YNET_News()
+        [HttpPost]
+        public ActionResult YNET_News(int cat, int amount)
         {
+            ViewBag.Errors = new List<String>();
             if (!Request.IsAuthenticated || User.Identity.GetPermission() == 0) // Checks if the user is logged in and has access
-                return;
+                ViewBag.Errors.Add("Not logged in");
+
+            Category c = db.Categories.SingleOrDefault(x => x.CategoryId == cat);
+            if (c == null)
+                ViewBag.Errors.Add("Not valid category.");
+
+            if (amount < 5 || amount > 50)
+                ViewBag.Errors.Add("not a valid amount");
+
+            if (ViewBag.Errors.Count > 0)
+                return RedirectToAction("Index");
 
             GetNews gn = new GetNews();
             List<string[]> lst = gn.Add_Ynet_News();
-            Category c = new Category();
-            c.Color = "blue";
-            c.Name = "blue";
-            c.CategoryId = 0;
 
             var userId = User.Identity.GetUserId();
             ApplicationUser user = db.Users.SingleOrDefault(x => x.Id.Equals(userId));
 
+            int count = 0;
             foreach (string[] str in lst)
             {
+                if (count++ >= amount)
+                    break;
+
                 Article a = new Article();
                 a.ArticleLink = str[2];
                 a.Category = c;
@@ -236,8 +286,12 @@ namespace NewsWebsite.Controllers
                 a.User = user;
                 a.NumOfLikes = 0;
                 a.Source = "YNET";
-                this.Create(a);
+
+                if (!db.Articles.Any(x => x.ArticleLink.Equals(a.ArticleLink))) // checks if the article is already exists
+                    Create(a);
             }
+
+            return RedirectToAction("Index");
         }
     }
 }

@@ -1,8 +1,12 @@
-﻿@model IEnumerable<NewsWebsite.Models.Article>
+﻿@*model IEnumerable<NewsWebsite.Models.Article>*@
+@using NewsWebsite.Models;
 @using NewsWebsite.Extensions;
+@model PaginatedList<NewsWebsite.Models.Article>
 
 @{
     ViewBag.Title = "Index";
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
 @if (!Request.IsAuthenticated)
@@ -23,28 +27,55 @@ else
         <p>
             @Html.ActionLink("Create New", "Create")
         </p>
-        <table class="table">
+
+        if(ViewBag.Errors != null && ViewBag.Errors.Count > 0)
+        {
+            foreach(var error in ViewBag.Errors)
+            {
+                <span>@error</span>
+            }
+        }
+
+        <a href="/Articles/Index?pageNumber=@(Model.PageIndex - 1)"
+           class="btn btn-dark fixed-btn-overall @prevDisabled">
+            Previous
+        </a>
+
+        for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a href="/Articles/Index?pageNumber=@i"
+               class="btn btn-outline-dark btn-outline-link fixed-btn-overall @(i == Model.PageIndex ? "disabled text-secondary" : "") ">
+                @i
+            </a>
+        }
+
+        <a href="/Articles/Index?pageNumber=@(Model.PageIndex + 1)"
+           class="btn btn-dark fixed-btn-overall @nextDisabled">
+            Next
+        </a><br /><br />
+
+        <table class="table table-bordered">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Category.Name)
+                    Category Name
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Title)
+                    Title
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Description)
+                    Description
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Date)
+                    Date
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.NumOfLikes)
+                    Num of likes
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ImageLink)
+                    Image Link
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ArticleLink)
+                    Article Link
                 </th>
                 <th></th>
             </tr>
@@ -83,35 +114,117 @@ else
 
         </table>
 
-        <!--<h3>Add articles from other sources</h3>-->
+        <a href="/Articles/Index?pageNumber=@(Model.PageIndex - 1)"
+           class="btn btn-dark fixed-btn-overall @prevDisabled">
+            Previous
+        </a>
 
+        for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a href="/Articles/Index?pageNumber=@i"
+               class="btn btn-outline-dark btn-outline-link fixed-btn-overall @(i == Model.PageIndex ? "disabled text-secondary" : "") ">
+                @i
+            </a>
+        }
+
+        <a href="/Articles/Index?pageNumber=@(Model.PageIndex + 1)"
+           class="btn btn-dark fixed-btn-overall @nextDisabled">
+            Next
+        </a><br /><br /><br />
+
+        <!--<h3>Add articles from other sources</h3>-->
         <div class="card-group">
             <div class="card text-center">
                 <div class="card-block">
                     <h4 class="card-title fixed-font">Ynet News RSS</h4>
                     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                 </div>
-                <div class="card-footer">
-                    <a href="/Articles/YNET_News" class="btn btn-primary">Add Articles</a>
-                </div>
+                <form method="post" action="/Articles/YNET_News">
+                    <div class="card-footer">
+                        <input type="submit" href="/Articles/YNET_News" class="btn btn-primary" value="Add Articles" />
+                    </div>
+                    <div class="card-footer">
+                        <select class="form-control" name="cat">
+                            <option>Select category</option>
+                            @foreach (var item in ViewBag.Categories)
+                            {
+                                <option value="@item.CategoryId">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="card-footer">
+                        <select class="form-control" name="amount">
+                            <option>Choose amount of articles</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                </form>
             </div>
+
             <div class="card text-center">
                 <div class="card-block">
                     <h4 class="card-title fixed-font">CNN News RSS</h4>
                     <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
                 </div>
-                <div class="card-footer">
-                    <a href="/Articles/CNN_News" class="btn btn-primary">Add Articles</a>
-                </div>
+                <form method="post" action="/Articles/CNN_News">
+                    <div class="card-footer">
+                        <input type="submit" class="btn btn-primary" value="Add Articles" />
+                    </div>
+                    <div class="card-footer">
+                        <select class="form-control" name="cat">
+                            <option>Select category</option>
+                            @foreach (var item in ViewBag.Categories)
+                            {
+                            <option value="@item.CategoryId">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="card-footer">
+                        <select class="form-control" name="amount">
+                            <option>Choose amount of articles</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                </form>
             </div>
+
             <div class="card text-center">
                 <div class="card-block">
                     <h4 class="card-title fixed-font">Fox News RSS</h4>
                     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
                 </div>
-                <div class="card-footer">
-                    <a href="/Articles/FOX_News" class="btn btn-primary">Add Articles</a>
-                </div>
+                <form method="post" action="/Articles/FOX_News">
+                    <div class="card-footer">
+                        <input type="submit" class="btn btn-primary" value="Add Articles" />
+                    </div>
+                    <div class="card-footer">
+                        <select class="form-control" name="cat">
+                            <option>Select category</option>
+                            @foreach (var item in ViewBag.Categories)
+                            {
+                            <option value="@item.CategoryId">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="card-footer">
+                        <select class="form-control" name="amount">
+                            <option>Choose amount of articles</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                </form>
             </div>
         </div>
     }

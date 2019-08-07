@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -13,7 +15,9 @@ namespace NewsWebsite.Models
     {
         [DefaultValue(0)]
         public int Permission { get; set; }
-        public ICollection<Article> Articles { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? StatsLastUpdate { get; set; }
+        public virtual ICollection<DistributionByCategory> DistributionByCategory { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

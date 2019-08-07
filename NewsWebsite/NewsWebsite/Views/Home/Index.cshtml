@@ -1,31 +1,17 @@
-﻿@model IEnumerable<NewsWebsite.Models.Article>
-
-@{
+﻿@{
     ViewBag.Title = "Home Page";
     int count = 0;
-    count = Model.Count();
+    try
+    {
+        count = Model.Count();
+    }
+    catch(Exception e)
+    {
+        count = 0;
+    }
 }
 
 
-<div class="card-columns">
-    @if (count > 0)
-    {
-        foreach (var item in Model)
-        {
-            <div class="card">
-                <img class="card-img-top img-fluid" src="@Html.DisplayFor(modelItem => item.ImageLink)" alt="Card image cap">
-                <div class="card-block">
-                    <h5 class="card-title fixed-font">@Html.DisplayFor(modelItem => item.Title)</h5>
-                    <p class="card-text fixed-fontsize">@Html.DisplayFor(modelItem => item.Description)</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">@item.lastUpdated(item.Date)</small>
-                </div>
-            </div>
-        }
-    }
-    else
-    {
-        <span>Sorry, there are no articles at the moment.</span>
-    }
+<div class="card-columns" id="articles">
+    Loading...
 </div>
