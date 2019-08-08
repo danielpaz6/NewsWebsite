@@ -14,6 +14,9 @@ namespace NewsWebsite
             bundles.Add(new ScriptBundle("~/bundles/script").Include(
                         "~/Scripts/script.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/d3").Include(
+                        "~/Scripts/d3.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 

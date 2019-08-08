@@ -83,6 +83,7 @@ namespace NewsWebsite.Controllers
                         d.Category = db.Categories.Find(item.CategoryId);
                         d.CategoryId = item.CategoryId;
                         d.Count = item.Count;
+                        d.User = user;
 
                         user.DistributionByCategory.Add(d);
                     }
@@ -143,22 +144,45 @@ namespace NewsWebsite.Controllers
         // GET: Get News
         public string GetArticles(int pageIndex)
         {
-            int articlesPerPage = 12; // settings
+            int articlesPerPage = 21; // settings
 
             IEnumerable<Article> articles;
             List<IEnumerable<Article>> list = new List<IEnumerable<Article>>();
             
             if (!Request.IsAuthenticated)
-                articles = db.Articles.ToList().Skip((pageIndex - 1) * articlesPerPage).Take(articlesPerPage);
+                articles = db.Articles.OrderBy(x => x.Date).ToList().Skip((pageIndex - 1) * articlesPerPage).Take(articlesPerPage);
             else
             {
-                int categorySize = db.Categories.Count();
-                
+                var userId = User.Identity.GetUserId();
+                ApplicationUser user = db.Users.SingleOrDefault(x => x.Id.Equals(userId));
+                List<Category> othersCategory = new List<Category>(db.Categories);
+
+                int categorySize = 0;
+                foreach(var v in user.DistributionByCategory)
+                {
+                    categorySize += v.Count;
+                }
+
+                double percent = categorySize == db.Categories.Count() ? 1 : 0.8;
+                foreach (var category in user.DistributionByCategory)
+                {
+                    int limit = (int)Math.Ceiling((double)((double)category.Count / (double)categorySize) * (int)(percent * articlesPerPage));
+                    var tmp = db.Articles.Where(item => item.CategoryId == category.CategoryId).OrderBy(x => x.Date).Skip((pageIndex - 1) * limit).Take(limit).ToList();
+
+                    list.Add(tmp);
+                    othersCategory.Remove(category.Category);
+                }
+
+                //for(int i = (int)Math.Ceiling(0.2 * articlesPerPage); i <= articlesPerPage; i++)
+                foreach(var category in othersCategory)
+                {
+                    int limit = (int)(Math.Ceiling(0.2 * articlesPerPage) / (double)othersCategory.Count());
+                    list.Add(db.Articles.Where(item => item.CategoryId == category.CategoryId).OrderBy(x => x.Date).Skip((pageIndex - 1) * limit).Take(limit).ToList());
+                }
+
+                articles = list.SelectMany(x => x).ToList();
             }
-
-
-            //var articles = db.Articles.ToList().Skip((pageIndex-1)* articlesPerPage).Take(articlesPerPage);
-
+            
             // --------- Displaying the articles list --------- \\
             StringBuilder s = new StringBuilder();
 

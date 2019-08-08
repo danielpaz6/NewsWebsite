@@ -38,7 +38,7 @@
 
             var increase;
             if (counter < 2)
-                increase = 0.5;
+                increase = 0.4;
             else if (counter >= 2 && counter < 4)
                 increase = 0.8;
             else

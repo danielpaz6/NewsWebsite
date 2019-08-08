@@ -1,5 +1,23 @@
 ﻿@using Microsoft.AspNet.Identity
 @using NewsWebsite.Models
+@{
+    /**/
+
+    var controllerName = string.Empty;
+    object controllerObj;
+    var actionName = string.Empty;
+    object actionObj;
+
+    if (ViewContext.RouteData.Values.TryGetValue("controller", out controllerObj))
+    {
+        controllerName = controllerObj.ToString();
+    }
+
+    if (ViewContext.RouteData.Values.TryGetValue("action", out actionObj))
+    {
+        actionName = actionObj.ToString();
+    }
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>

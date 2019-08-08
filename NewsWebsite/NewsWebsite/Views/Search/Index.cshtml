@@ -36,8 +36,8 @@ else
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="validationCustom04">Category</label>
-                        <select id="inputState" class="form-control">
-                            <option selected="" name="category">Choose...</option>
+                        <select name="category" id="inputState" class="form-control">
+                            <option>Choose...</option>
                             @foreach (var item in ViewBag.Categories)
                             {
                                 <option value="@item.CategoryId">@item.Name</option>
