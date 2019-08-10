@@ -1,0 +1,51 @@
+﻿@model NewsWebsite.Models.Setting
+@using NewsWebsite.Extensions
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@if (!Request.IsAuthenticated)
+{
+    <span>Sorry, you must login in order to access this page.</span>
+}
+else
+{
+
+    if (User.Identity.GetPermission() == 0)
+    {
+        <span>Sorry, you don't have access to reach this page.</span>
+    }
+    else
+    {
+
+        <h2>Details</h2>
+
+        <div>
+            <h4>Setting</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Key)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Key)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Value)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Value)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.SettingId }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    }
+}

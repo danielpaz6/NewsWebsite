@@ -17,6 +17,8 @@
     {
         actionName = actionObj.ToString();
     }
+
+    ApplicationDbContext db = new ApplicationDbContext();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -57,9 +59,10 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown02">
-                                <a class="dropdown-item" href="#">Image</a>
-                                <a class="dropdown-item" href="#">Video</a>
-                                <a class="dropdown-item" href="#">New story</a>
+                                @foreach (var item in db.Categories)
+                                {
+                                    <a class="dropdown-item" href="/Search/Index?category=@item.CategoryId">@item.Name</a>
+                                }
                             </div>
                         </li>
                         @if (Request.IsAuthenticated)
@@ -85,8 +88,11 @@
                     <aside class="sidebar">
                         <div class="card mb-4" style="border: 0;">
                             <div class="card-body">
-                                <h4 class="card-title">About</h4>
-                                <p class="card-text">Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam <a href="https://milo.bootlab.io/home-fullwidth.html#">semper libero</a>, sit amet adipiscing sem neque sed ipsum. </p>
+                                <!--<h4 class="card-title">About</h4>
+    <p class="card-text">Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam <a href="https://milo.bootlab.io/home-fullwidth.html#">semper libero</a>, sit amet adipiscing sem neque sed ipsum. </p>
+    -->
+                                <h4 class="card-title">Weather</h4>
+                                @Html.Partial("~/Views/Shared/Weather.cshtml")
                             </div>
                         </div><!-- /.card -->
                     </aside>

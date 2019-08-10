@@ -41,6 +41,7 @@ namespace NewsWebsite.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<View> Views { get; set; }
         public DbSet<Like> Likes { get; set; } 
+        public DbSet<Setting> Settings { get; set; } 
 
         public static ApplicationDbContext Create()
         {

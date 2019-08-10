@@ -145,11 +145,14 @@ namespace NewsWebsite.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if (Request.IsAuthenticated && User.Identity.GetPermission() != 0) // Checks if the user is logged in and has access
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing);
             }
-            base.Dispose(disposing);
         }
 
         // News from other resources

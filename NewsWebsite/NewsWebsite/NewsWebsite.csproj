@@ -204,6 +204,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -241,6 +242,10 @@
     <Compile Include="Migrations\201908071528315_userstats.Designer.cs">
       <DependentUpon>201908071528315_userstats.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908101534455_Settings.cs" />
+    <Compile Include="Migrations\201908101534455_Settings.Designer.cs">
+      <DependentUpon>201908101534455_Settings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Article.cs" />
@@ -252,6 +257,7 @@
     <Compile Include="Models\LoginRegister.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PaginatedList.cs" />
+    <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\View.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -336,6 +342,12 @@
     <Content Include="Views\Home\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Statistics\Index.cshtml" />
+    <Content Include="Views\Shared\Weather.cshtml" />
+    <Content Include="Views\Settings\Create.cshtml" />
+    <Content Include="Views\Settings\Delete.cshtml" />
+    <Content Include="Views\Settings\Details.cshtml" />
+    <Content Include="Views\Settings\Edit.cshtml" />
+    <Content Include="Views\Settings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -377,6 +389,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908071528315_userstats.resx">
       <DependentUpon>201908071528315_userstats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908101534455_Settings.resx">
+      <DependentUpon>201908101534455_Settings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

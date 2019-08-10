@@ -21,7 +21,7 @@ namespace NewsWebsite.Controllers
                 var userId = User.Identity.GetUserId();
                 ApplicationUser user = db.Users.SingleOrDefault(x => x.Id.Equals(userId));
                 
-                if(!user.StatsLastUpdate.HasValue || (user.StatsLastUpdate != null && (DateTime.Now - user.StatsLastUpdate).Value.Days >= 1))
+                if(user.StatsLastUpdate == null || (DateTime.Now - user.StatsLastUpdate).Value.Days >= 1)
                 {
                     /*
                     var entryPoint = (from a in db.Articles
@@ -88,6 +88,7 @@ namespace NewsWebsite.Controllers
                         user.DistributionByCategory.Add(d);
                     }
 
+                    db.Users.Find(userId).StatsLastUpdate = DateTime.Now;
                     db.SaveChanges();
                 }
             }
@@ -104,9 +105,9 @@ namespace NewsWebsite.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            var locations = db.Settings.Where(x => x.Key.Equals("Location"));
 
-            return View();
+            return View(locations.ToList());
         }
 
 
@@ -183,7 +184,7 @@ namespace NewsWebsite.Controllers
                 articles = list.SelectMany(x => x).ToList();
             }
             
-            // --------- Displaying the articles list --------- \\
+            // --------- Displaying the articles list
             StringBuilder s = new StringBuilder();
 
             foreach(var article in articles)

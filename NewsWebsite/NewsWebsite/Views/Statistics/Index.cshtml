@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Statistics";
     int count = 1, count2 = 1;
-    int max = ViewBag.CategoryAndCountMax;
+    int max = !Request.IsAuthenticated ? 0 : ViewBag.CategoryAndCountMax;
 }
 
 @if (!Request.IsAuthenticated)
@@ -89,170 +89,156 @@ else
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
-                        <div id="my_dataviz"></div>
+                        <!-- Load d3.js -->
+                        <script src="https://d3js.org/d3.v4.js"></script>
+                        This graph shows how many articles were added to the site each day.
 
+                        <!-- Create a div where the graph will take place -->
+                        <div id="my_dataviz" style="margin-left: -10px; margin-top: 10px;"></div>
 
-                        <style>
-                            /* set the CSS */
-
-                            .axis {
-                                font: 14px sans-serif;
-                            }
-
-                            .line {
-                                fill: none;
-                                stroke: steelblue;
-                                stroke-width: 2px;
-                            }
-                        </style>
-
-                            <!-- load the d3.js library -->
-                            <script src="https://d3js.org/d3.v4.min.js"></script>
-                            <script>
-
+                        <script>
+                            function draw1() {
                                 // set the dimensions and margins of the graph
-                                var margin = { top: 20, right: 20, bottom: 70, left: 50 },
-                                    width = 960 - margin.left - margin.right,
-                                    height = 500 - margin.top - margin.bottom;
-
-                                // parse the date / time
-                                var parseTime = d3.timeParse("%d-%b-%y");
-
-                                // set the ranges
-                                var x = d3.scaleTime().range([0, width]);
-                                var y = d3.scaleLinear().range([height, 0]);
-
-                                // define the line
-                                var valueline = d3.line()
-                                    .x(function (d) { return x(d.date); })
-                                    .y(function (d) { return y(d.close); });
-
-                                // append the svg obgect to the body of the page
-                                // appends a 'group' element to 'svg'
-                                // moves the 'group' element to the top left margin
-                                var svg = d3.select("#my_dataviz").append("svg")
+                                var margin = { top: 10, right: 30, bottom: 30, left: 30 },
+                                    width = 410 - margin.left - margin.right,
+                                    height = 380 - margin.top - margin.bottom;
+                                // append the svg object to the body of the page
+                                var svg = d3.select("#my_dataviz")
+                                    .append("svg")
                                     .attr("width", width + margin.left + margin.right)
                                     .attr("height", height + margin.top + margin.bottom)
                                     .append("g")
                                     .attr("transform",
                                         "translate(" + margin.left + "," + margin.top + ")");
-
-                                // Get the data
-                                d3.csv("/Statistics/GetGraph1", function (error, data) {
-                                    if (error) throw error;
-
-                                    // format the data
-                                    data.forEach(function (d) {
-                                        d.date = parseTime(d.date);
-                                        d.close = +d.close;
-                                    });
-
-                                    // Scale the range of the data
-                                    x.domain(d3.extent(data, function (d) { return d.date; }));
-                                    y.domain([0, d3.max(data, function (d) { return d.close; })]);
-
-                                    // Add the valueline path.
-                                    svg.append("path")
-                                        .data([data])
-                                        .attr("class", "line")
-                                        .attr("d", valueline);
-
-                                    // Add the X Axis
-                                    svg.append("g")
-                                        .attr("class", "axis")
-                                        .attr("transform", "translate(0," + height + ")")
-                                        .call(d3.axisBottom(x).ticks(10))
-                                        .selectAll("text")
-                                        .style("text-anchor", "end")
-                                        .attr("dx", "-.8em")
-                                        .attr("dy", ".15em")
-                                        .attr("transform", "rotate(-65)");
-
-                                    // Add the Y Axis
-                                    svg.append("g")
-                                        .attr("class", "axis")
-                                        .call(d3.axisLeft(y));
-
-                                });
-
-                            </script>
-
+                                //Read the data
+                                
+                                d3.csv("/Statistics/GetGraph1",
+                                    // When reading the csv, I must format variables:
+                                    function (d) {
+                                        return { date: d3.timeParse("%Y-%m-%d")(d.date), value: d.value }
+                                    },
+                                    // Now I can use this dataset:
+                                    function (data) {
+                                        // Add X axis --> it is a date format
+                                        var x = d3.scaleTime()
+                                            .domain(d3.extent(data, function (d) { return d.date; }))
+                                            .range([0, width]);
+                                        svg.append("g")
+                                            .attr("transform", "translate(0," + height + ")")
+                                            .call(d3.axisBottom(x));
+                                        // Add Y axis
+                                        var y = d3.scaleLinear()
+                                            .domain([0, 100])
+                                            .range([height, 0]);
+                                        svg.append("g")
+                                            .call(d3.axisLeft(y));
+                                        // Add the line
+                                        svg.append("path")
+                                            .datum(data)
+                                            .attr("fill", "none")
+                                            .attr("stroke", "#69b3a2")
+                                            .attr("stroke-width", 1.5)
+                                            .attr("d", d3.line()
+                                                .x(function (d) { return x(d.date) })
+                                                .y(function (d) { return y(d.value) })
+                                            )
+                                        // Add the points
+                                        svg
+                                            .append("g")
+                                            .selectAll("dot")
+                                            .data(data)
+                                            .enter()
+                                            .append("circle")
+                                            .attr("cx", function (d) { return x(d.date) })
+                                            .attr("cy", function (d) { return y(d.value) })
+                                            .attr("r", 5)
+                                            .attr("fill", "#69b3a2")
+                                    })
+                            }
+                            setTimeout(draw1, 1200);
+                        </script>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="card">
-                    <div>
-                        <svg id="svg_panel" width="280" height="280"></svg>
-                        <div id="svg_panel_txt"></div>
-                    </div>
-                    <script type="text/javascript">
-                        // svg_id - id of target svg
-                        // data - array of objects {label, value}
-                        function drawPieChartSVG(svg_id, data) {
-                            var svg = document.getElementById(svg_id);
-                            var width = svg.width.baseVal.value,
-                                height = svg.height.baseVal.value,
-                                radius = Math.min(width, height) / 2;
-                            var colors = d3.scaleOrdinal(d3.schemeCategory10);
-                            var arc = d3.arc()
-                                .outerRadius(radius - 10)
-                                .innerRadius(0)
-                                .padAngle(0.03);
+                    <div class="card-body">
+                        This graph shows the ratio of the different categories.
 
-                            var pie = d3.pie().value(function (d) { return d.value; });
-                            var root = d3.select("#" + svg_id)
-                                .datum(data)
-                                .attr("width", width)
-                                .attr("height", height)
-                                .append("g")
-                                .attr("transform",
-                                    "translate(" + width / 2.0 + "," + height / 2.0 + ")");
+                        <!-- Create a div where the graph will take place -->
+                        <div id="graph2" style="margin-top: -20px; margin-top: 10px;"></div>
 
-                            var arcs = root
-                                .selectAll("g.slice")
-                                .data(pie)
-                                .enter()
-                                .append("g")
-                                .attr("class", "slice");
+                        <!-- Color scale -->
+                        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+                        <script>
+                            function draw2() {
+                                // set the dimensions and margins of the graph
+                                var width = 400
+                                height = 400
+                                margin = 20
 
-                            arcs
-                                .append("path")
-                                .attr("fill", function (d, i) { return colors(i); })
-                                .attr("d", arc)
+                                // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+                                var radius = Math.min(width, height) / 2 - margin
 
-                                // show details in the separate html element when mouse is over the specified sector
-                                .on("mouseover", function (d, i) {
-                                    var txt = document.getElementById(svg_id + "_txt");
-                                    if (txt) {
-                                        txt.innerHTML = d.data.label + " (" + d.data.value + ")";
+                                // append the svg object to the div called 'graph2'
+                                var svg = d3.select("#graph2")
+                                    .append("svg")
+                                    .attr("width", width)
+                                    .attr("height", height)
+                                    .append("g")
+                                    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+                                // Create dummy data
+                                var data = {
+                                    @foreach (var item in ViewBag.CatMap)
+                                    {
+                                        @Html.Raw(item.Key + ": " + item.Value + ",");
                                     }
-                                });
+                                }
 
-                            // place labels on the chart
-                            arcs.append("svg:text")
-                                .attr("transform", function (d) {
-                                    d.innerRadius = radius / 2.0;
-                                    d.outerRadius = radius;
-                                    // text will be inserted in the center of the current section
+                                // set the color scale
+                                var color = d3.scaleOrdinal()
+                                    .domain(data)
+                                    .range(d3.schemeSet2);
 
-                                    return "translate(" + arc.centroid(d) + ")";
-                                })
-                                .attr("text-anchor", "middle")
+                                // Compute the position of each group on the pie:
+                                var pie = d3.pie()
+                                    .value(function (d) { return d.value; })
+                                var data_ready = pie(d3.entries(data))
+                                // Now I know that group A goes from 0 degrees to x degrees and so on.
 
-                                // d.data - our data item, assigned to the current section. "label" is a part of our data object
-                                .text(function (d, i) { return d.data.label; });
-                        }
-                        //data for the pie chart
-                        var pie_chart_data = [];
+                                // shape helper to build arcs:
+                                var arcGenerator = d3.arc()
+                                    .innerRadius(0)
+                                    .outerRadius(radius)
 
-                        //draw the pie chart
-                        function updateChart() {
-                            drawPieChartSVG("svg_panel", pie_chart_data);
-                        }
+                                // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+                                svg
+                                    .selectAll('mySlices')
+                                    .data(data_ready)
+                                    .enter()
+                                    .append('path')
+                                    .attr('d', arcGenerator)
+                                    .attr('fill', function (d) { return (color(d.data.key)) })
+                                    .attr("stroke", "black")
+                                    .style("stroke-width", "2px")
+                                    .style("opacity", 0.7)
 
-                        Sys.Application.add_load(updateChart);
-                    </script>
+                                // Now add the annotation. Use the centroid method to get the best coordinates
+                                svg
+                                    .selectAll('mySlices')
+                                    .data(data_ready)
+                                    .enter()
+                                    .append('text')
+                                    .text(function (d) { return d.data.key })
+                                    .attr("transform", function (d) { return "translate(" + arcGenerator.centroid(d) + ")"; })
+                                    .style("text-anchor", "middle")
+                                    .style("font-size", 14)
+                            }
+
+                            setTimeout(draw2, 1200);
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>

@@ -6,128 +6,119 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using NewsWebsite.Models;
 using NewsWebsite.Extensions;
+using NewsWebsite.Models;
 
 namespace NewsWebsite.Controllers
 {
-    public class CategoriesController : Controller
+    public class SettingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Categories
-        public ActionResult Index(string searchText)
+        // GET: Settings
+        public ActionResult Index()
         {
-            var categories = from m in db.Categories select m;
-
-            if(!String.IsNullOrEmpty(searchText))
-            {
-                categories = categories.Where(s => s.Name.Contains(searchText));
-            }
-            //return View(db.Categories.ToList());
-            return View(categories.ToList());
+            return View(db.Settings.ToList());
         }
 
-        // GET: Categories/Details/5
+        // GET: Settings/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Setting setting = db.Settings.Find(id);
+            if (setting == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(setting);
         }
 
-        // GET: Categories/Create
+        // GET: Settings/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: Settings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryId,Name,Color")] Category category)
+        public ActionResult Create([Bind(Include = "SettingId,Key,Value")] Setting setting)
         {
             if (Request.IsAuthenticated && User.Identity.GetPermission() != 0) // Checks if the user is logged in and has access
             {
                 if (ModelState.IsValid)
                 {
-                    db.Categories.Add(category);
+                    db.Settings.Add(setting);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
             }
-
-            return View(category);
+            return View(setting);
         }
 
-        // GET: Categories/Edit/5
+        // GET: Settings/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Setting setting = db.Settings.Find(id);
+            if (setting == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(setting);
         }
 
-        // POST: Categories/Edit/5
+        // POST: Settings/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CategoryId,Name,Color")] Category category)
+        public ActionResult Edit([Bind(Include = "SettingId,Key,Value")] Setting setting)
         {
             if (Request.IsAuthenticated && User.Identity.GetPermission() != 0) // Checks if the user is logged in and has access
             {
                 if (ModelState.IsValid)
                 {
-                    db.Entry(category).State = EntityState.Modified;
+                    db.Entry(setting).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
             }
-
-            return View(category);
+            return View(setting);
         }
 
-        // GET: Categories/Delete/5
+        // GET: Settings/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Setting setting = db.Settings.Find(id);
+            if (setting == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(setting);
         }
 
-        // POST: Categories/Delete/5
+        // POST: Settings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             if (Request.IsAuthenticated && User.Identity.GetPermission() != 0) // Checks if the user is logged in and has access
             {
-                Category category = db.Categories.Find(id);
-                db.Categories.Remove(category);
+                Setting setting = db.Settings.Find(id);
+                db.Settings.Remove(setting);
                 db.SaveChanges();
             }
 
