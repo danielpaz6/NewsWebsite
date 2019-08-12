@@ -110,17 +110,14 @@
                         <div class="card mb-4" style="border: 0;">
                             <div class="card-body">
                                 <h4 class="card-title">Popular stories</h4>
-                                <a href="#" class="d-inline-block">
-                                    <h4 class="h6">The blind man</h4>
-                                    <img class="card-img" src="./Milo - Magazine_Blog Theme_files/2.jpg" alt="">
-                                </a>
-                                <time class="timeago" datetime="2017-10-03 20:00" data-tid="7">1 year ago</time> in Lifestyle
+                                @foreach(var item in db.Articles.OrderByDescending(x => x.Date).Take(3))
+                                {
+                                    <a href="#" class="d-inline-block">
+                                        <h4 class="h6">@item.shortString(item.Title, 60)</h4>
+                                    </a>
 
-                                <a href="#" class="d-inline-block mt-3">
-                                    <h4 class="h6">Crying on the news</h4>
-                                    <img class="card-img" src="./Milo - Magazine_Blog Theme_files/3.jpg" alt="">
-                                </a>
-                                <time class="timeago" datetime="2017-07-16 20:00" data-tid="8">2 years ago</time> in Work
+                                    <time class="timeago" datetime="@item.lastUpdated(item.Date)">@item.lastUpdated(item.Date)</time> @:in Lifestyle<br /><br />
+                                }
                             </div>
                         </div><!-- /.card -->
                     </aside>
@@ -128,7 +125,7 @@
             </div>
         </div>
     </main>
-    <div class="site-newsletter">
+    <!--<div class="site-newsletter">
         <div class="container">
             <div class="text-center">
                 <h3 class="h4 mb-2">Subscribe to our newsletter</h3>
@@ -145,64 +142,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="site-instagram">
-        <div class="action">
-            <a class="btn btn-light" href="#">
-                Follow us at Instagram
-            </a>
-        </div>
-        <div class="row no-gutters">
-            <div class="col-sm-6">
-                <div class="row no-gutters">
-                    <div class="col-3">
-                        <a class="photo" href="#">
-                            <img class="img-fluid" src="..." alt="">
-                        </a>
-                    </div>
-                    <div class="col-3">
-                        <a class="photo" href="#">
-                            <img class="img-fluid" src="..." alt="">
-                        </a>
-                    </div>
-                    <div class="col-3">
-                        <a class="photo" href="#">
-                            <img class="img-fluid" src="..." alt="">
-                        </a>
-                    </div>
-                    <div class="col-3">
-                        <a class="photo" href="#">
-                            <img class="img-fluid" src="..." alt="">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="row no-gutters">
-                    <div class="col-3">
-                        <a class="photo" href="#">
-                            <img class="img-fluid" src="..." alt="">
-                        </a>
-                    </div>
-                    <div class="col-3">
-                        <a class="photo" href="#">
-                            <img class="img-fluid" src="..." alt="">
-                        </a>
-                    </div>
-                    <div class="col-3">
-                        <a class="photo" href="#">
-                            <img class="img-fluid" src="..." alt="">
-                        </a>
-                    </div>
-                    <div class="col-3">
-                        <a class="photo" href="#">
-                            <img class="img-fluid" src="..." alt="">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </div>-->
+
     <footer class="site-footer bg-darkest" role="contentinfo">
         <div class="container">
             <ul class="nav justify-content-center">

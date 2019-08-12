@@ -28,31 +28,43 @@ else
             @Html.ActionLink("Create New", "Create")
         </p>
 
-        if(ViewBag.Errors != null && ViewBag.Errors.Count > 0)
+        if (ViewBag.Errors != null && ViewBag.Errors.Count > 0)
         {
-            foreach(var error in ViewBag.Errors)
+            foreach (var error in ViewBag.Errors)
             {
                 <span>@error</span>
             }
         }
 
-        <a href="/Articles/Index?pageNumber=@(Model.PageIndex - 1)"
-           class="btn btn-dark fixed-btn-overall @prevDisabled">
-            Previous
-        </a>
+        <div>
+            <div style="float: left;">
+                <a href="/Articles/Index?pageNumber=@(Model.PageIndex - 1)"
+                   class="btn btn-dark fixed-btn-overall @prevDisabled">
+                    Previous
+                </a>
 
-        for (int i = 1; i <= Model.TotalPages; i++)
-        {
-            <a href="/Articles/Index?pageNumber=@i"
-               class="btn btn-outline-dark btn-outline-link fixed-btn-overall @(i == Model.PageIndex ? "disabled text-secondary" : "") ">
-                @i
-            </a>
-        }
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <a href="/Articles/Index?pageNumber=@i"
+                       class="btn btn-outline-dark btn-outline-link fixed-btn-overall @(i == Model.PageIndex ? "disabled text-secondary" : "") ">
+                        @i
+                    </a>
+                }
 
-        <a href="/Articles/Index?pageNumber=@(Model.PageIndex + 1)"
-           class="btn btn-dark fixed-btn-overall @nextDisabled">
-            Next
-        </a><br /><br />
+                <a href="/Articles/Index?pageNumber=@(Model.PageIndex + 1)"
+                   class="btn btn-dark fixed-btn-overall @nextDisabled">
+                    Next
+                </a><br /><br />
+            </div>
+            <div style="float: right;">
+                <form method="get" action="/Articles/Index">
+                    Search by title & desc: 
+                    <input type="text" value="" name="title" placeholder="Filter by title" autocomplete="off" />
+                    <input type="text" value="" name="desc" placeholder="Filter by desc" autocomplete="off" />
+                    <input type="submit" value="search" />
+                </form><br />
+            </div>
+        </div>
 
         <table class="table table-bordered">
             <tr>
@@ -179,7 +191,7 @@ else
                             <option>Select category</option>
                             @foreach (var item in ViewBag.Categories)
                             {
-                            <option value="@item.CategoryId">@item.Name</option>
+                                <option value="@item.CategoryId">@item.Name</option>
                             }
                         </select>
                     </div>
@@ -210,7 +222,7 @@ else
                             <option>Select category</option>
                             @foreach (var item in ViewBag.Categories)
                             {
-                            <option value="@item.CategoryId">@item.Name</option>
+                                <option value="@item.CategoryId">@item.Name</option>
                             }
                         </select>
                     </div>

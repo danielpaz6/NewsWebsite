@@ -1,7 +1,113 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<article class="card mb-4">
+    <header class="card-header text-center">
+        <h1 class="card-title" style="padding-bottom: 0;">Who are we?</h1>
+    </header>
+    <div class="card-body" style="margin-top: 0; padding-top: 0;">
 
-<p>Use this area to provide additional information.</p>
+        <video width="100%" controls autoplay>
+            <source src="/Resources/Introduction.mp4" type="video/mp4" />
+            Your browser does not support HTML5 video.
+        </video><br /><br />
+
+        <p><strong>
+    This is a news site that is constantly updating and grouping all kinds of sites and categories together.
+
+    The more you browse the site, the better you will become acquainted, and more relevant articles will be presented.
+</strong></p>
+
+        <p>On this site you can watch <a href="https://en.wikipedia.org/wiki/RSS" style="color: blue; text-decoration: underline;">RSS</a> content from different websites in a convenient and smart way, so if you get into a specific article then you will be offered more articles of the same kind, saving you time on interesting content search.</p>
+
+        <p>
+            In addition, the site has support for displaying the weather and can be searched by weather city.
+
+            It is also possible to do advanced search, by article uploader, category, article content and more.
+        </p>
+
+        <h4>Our Team</h4>
+        
+        <div class="card-group" style="margin-top: 35px;">
+            <div class="card aboutCard">
+                <img src="~/Resources/pic4.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Daniel Paz</h5>
+                    <p class="card-text">Hello there!<br />I'm a Computer Science at The College of Management.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.linkedin.com/in/paz-daniel/" class="btn btn-primary fixed-btn-overall">Linkedin</a>
+                    <a href="https://github.com/danielpaz6/" class="btn btn-primary fixed-btn-overall">Github</a>
+                </div>
+            </div>
+            <div class="card aboutCard">
+                <img src="~/Resources/pic1.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Omer Nahum</h5>
+                    <p class="card-text">Hello there!<br />I'm a Computer Science at The College of Management.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.linkedin.com/in/omernahum/" class="btn btn-primary fixed-btn-overall">Linkedin</a>
+                    <a href="https://github.com/OmerNahum" class="btn btn-primary fixed-btn-overall">Github</a>
+                </div>
+            </div>
+            <div class="card aboutCard">
+                <img src="~/Resources/pic2.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Or Mizrahi</h5>
+                    <p class="card-text">Hello there!<br />I'm a Computer Science at The College of Management.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.linkedin.com/in/ormizrahi7/" class="btn btn-primary fixed-btn-overall">Linkedin</a>
+                    <a href="https://github.com/OrMizrahi" class="btn btn-primary fixed-btn-overall">Github</a>
+                </div>
+            </div>
+            <div class="card aboutCard">
+                <img src="~/Resources/pic3.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Opal Koren</h5>
+                    <p class="card-text">Hello there!<br />I'm a Computer Science at The College of Management.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.linkedin.com/in/opal-koren-b33023175/" class="btn btn-primary fixed-btn-overall">Linkedin</a>
+                    <a href="https://github.com/OpalKo93" class="btn btn-primary fixed-btn-overall">Github</a>
+                </div>
+            </div>
+        </div><br /><br />
+
+        <p>
+            In addition, we have used a wide variety of different programming-related technologies,
+            Here are some of them:
+        </p>
+
+        <div class="row">
+            <div class="col-md-4">
+                <ul>
+                    <li>Ajax</li>
+                    <li>jQuery</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <ul>
+                    <li>CSS3</li>
+                    <li>HTML5</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <ul>
+                    <li>Javascript</li>
+                    <li>ASP.NET</li>
+                </ul>
+            </div>
+        </div>
+
+        <br />
+        <p>In order to build this site, we have undertaken in-depth self-learning of all the topics listed above, as well as various instructors and courses at both the college and various sites such as Udemy with the ability to accomplish the various goals we have set for ourselves on the site.</p>
+
+    </div>
+</article>
+
+<h2>Our latest facebook posts</h2><br />
+<div class="row" id="facebook_posts">
+    <div style="padding: 30px; padding-top: 5px;">Loading...</div>
+</div><br /><br /><br /><br />

@@ -11,119 +11,120 @@ using NewsWebsite.Models;
 
 namespace NewsWebsite.Controllers
 {
-    public class SettingsController : Controller
+    public class ApplicationUsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Settings
-        public ActionResult Index(string value)
+        // GET: ApplicationUsers
+        public ActionResult Index(string username)
         {
-            var settings = from m in db.Settings select m;
+            var users = from m in db.Users select m;
+            if (!String.IsNullOrEmpty(username))
+                users = users.Where(x => x.UserName.Contains(username));
 
-            if (!String.IsNullOrEmpty(value))
-                settings = settings.Where(x => x.Value.Contains(value));
-
-            return View(settings);
+            return View(users);
         }
 
-        // GET: Settings/Details/5
-        public ActionResult Details(int? id)
+        // GET: ApplicationUsers/Details/5
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Setting setting = db.Settings.Find(id);
-            if (setting == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(setting);
+            return View(applicationUser);
         }
 
-        // GET: Settings/Create
+        // GET: ApplicationUsers/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Settings/Create
+        // POST: ApplicationUsers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SettingId,Key,Value")] Setting setting)
+        public ActionResult Create([Bind(Include = "Id,Permission,StatsLastUpdate,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
         {
             if (Request.IsAuthenticated && User.Identity.GetPermission() != 0) // Checks if the user is logged in and has access
             {
                 if (ModelState.IsValid)
                 {
-                    db.Settings.Add(setting);
+                    db.Users.Add(applicationUser);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
             }
-            return View(setting);
+
+            return View(applicationUser);
         }
 
-        // GET: Settings/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: ApplicationUsers/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Setting setting = db.Settings.Find(id);
-            if (setting == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(setting);
+            return View(applicationUser);
         }
 
-        // POST: Settings/Edit/5
+        // POST: ApplicationUsers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SettingId,Key,Value")] Setting setting)
+        public ActionResult Edit([Bind(Include = "Id,Permission,StatsLastUpdate,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
         {
             if (Request.IsAuthenticated && User.Identity.GetPermission() != 0) // Checks if the user is logged in and has access
             {
                 if (ModelState.IsValid)
                 {
-                    db.Entry(setting).State = EntityState.Modified;
+                    db.Entry(applicationUser).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
             }
-            return View(setting);
+
+            return View(applicationUser);
         }
 
-        // GET: Settings/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: ApplicationUsers/Delete/5
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Setting setting = db.Settings.Find(id);
-            if (setting == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(setting);
+            return View(applicationUser);
         }
 
-        // POST: Settings/Delete/5
+        // POST: ApplicationUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
             if (Request.IsAuthenticated && User.Identity.GetPermission() != 0) // Checks if the user is logged in and has access
             {
-                Setting setting = db.Settings.Find(id);
-                db.Settings.Remove(setting);
+                ApplicationUser applicationUser = db.Users.Find(id);
+                db.Users.Remove(applicationUser);
                 db.SaveChanges();
             }
 

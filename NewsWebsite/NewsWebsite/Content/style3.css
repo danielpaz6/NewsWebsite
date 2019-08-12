@@ -148,7 +148,16 @@ input:checked + .slider:before {
     }
 
 
-/* Weather */
+/* About */
 
+.aboutCard {
+    margin-right: 5px;
+    border-bottom: 0 !important;
+    margin-bottom: 10px;
+}
 
-
+.aboutCard img {
+    border-radius: 500px !important;
+    width: 150px !important;
+    margin: auto;
+}

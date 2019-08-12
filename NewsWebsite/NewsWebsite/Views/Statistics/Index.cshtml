@@ -31,7 +31,7 @@ else
                             <h2 class="card-title fixed-font">@ViewBag.CountArticles</h2>
                             <h6 class="card-subtitle mb-2 text-muted">Articles</h6>
                         </header>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="card-text">Some quick data of the top 3 most watched articles in the website. (Title and amount)</p>
 
                         <svg width="300" height="80">
                             @foreach (var item in ViewBag.Articles)
@@ -55,7 +55,7 @@ else
                             <h2 class="card-title fixed-font">@ViewBag.CountCategories</h2>
                             <h6 class="card-subtitle mb-2 text-muted">Categories</h6>
                         </header>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="card-text">Here you can see the various categories, splitted by their name and amount of articles.</p>
                         <svg width="300" height="@(ViewBag.CountCategories * 25)">
                             @foreach (var v in ViewBag.CatMap)
                             {
@@ -78,8 +78,18 @@ else
                             <h2 class="card-title fixed-font">@ViewBag.CountUsers</h2>
                             <h6 class="card-subtitle mb-2 text-muted">Application Users</h6>
                         </header>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="card-link">Another link</a>
+                        <p class="card-text">The increasement of new users in the website.</p>
+                        <canvas id="myCanvas" width="250" height="100">
+                            Your browser does not support the HTML5 canvas tag.
+                        </canvas>
+
+                        <script>
+                            var c = document.getElementById("myCanvas");
+                            var ctx = c.getContext("2d");
+                            ctx.moveTo(0, 20);
+                            ctx.lineTo(220, 100);
+                            ctx.stroke();
+                        </script>
                     </div>
                 </article><!-- /.card -->
             </div>

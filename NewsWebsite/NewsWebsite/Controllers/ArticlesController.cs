@@ -18,18 +18,25 @@ namespace NewsWebsite.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Articles
-        public ActionResult Index(string searchText, int? pageNumber)
+        public ActionResult Index(string title, string desc, int? pageNumber)
         {
-            //var articles = from m in db.Articles select m
+            //var articles = from m in db.Articles select m;
+            var articles = db.Articles.Include(a => a.Category);
+
+            if (!String.IsNullOrEmpty(title))
+                articles = articles.Where(x => x.Title.Contains(title));
+
+            if (!String.IsNullOrEmpty(desc))
+                articles = articles.Where(x => x.Description.Contains(desc));
+
             int pageSize = 20;
 
-            if (searchText != null)
+            if (title != null)
             {
                 pageNumber = 1;
             }
 
             ViewBag.Categories = db.Categories.ToList();
-            var articles = db.Articles.Include(a => a.Category);
 
            return View(PaginatedList<Article>.Create(articles, pageNumber ?? 1, pageSize));
            //return View(articles.ToList());

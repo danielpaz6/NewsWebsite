@@ -102,4 +102,25 @@
         $("#gmap_canvas").attr("src", "https://maps.google.com/maps?q="+$(this).html()+"&t=&z=13&ie=UTF8&iwloc=&output=embed");
     });
 
+    $.get("https://graph.facebook.com/v4.0/me?fields=id%2Cname%2Cposts&access_token=EAAdb2ZBoZCj40BAL6ZAvdAbnlHaahsvIiOPHmYFGoE9IZAYlLgOlIGJ0PPIDrM1n2M7q07ITekb8ZByNZBglDKCGDatkyFxXBaZBDpTvJNxf5akrh8PonwxPgnwUQ0hVLnABSoO60kuNXJv0pTIuuopd6f0wKDY4ZCNgBFPFuW606XmFpMo13xe7ctFlUrkjt6EZD", function (data) {
+        var size = data.posts.data.length > 3 ? 3 : data.posts.data.length;
+        for (var i = 0; i < size; i++) {
+            var date = new Date(parseInt(data.posts.data[i].created_time));
+            var string =
+                '<div class="card text-white bg-primary mb-3" style="border-radius: 3px; max-width: 18rem; margin-left: 20px;">' +
+                '<div class="card-body">' +
+                '<h5 class="card-title">A post from facebook</h5>' +
+                '<p class="card-text">“ ' + data.posts.data[i].message + ' ”</p>'+
+                    '</div >'+
+                '</div>';
+
+            if (i == 0) {
+                $("#facebook_posts").html(string);
+            }
+            else {
+                $("#facebook_posts").append(string);
+            }
+        }
+    });
+
 });

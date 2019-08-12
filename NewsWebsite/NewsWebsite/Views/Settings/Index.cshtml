@@ -21,9 +21,17 @@ else
 
         <h2>Index</h2>
 
+
         <p>
             @Html.ActionLink("Create New", "Create")
         </p>
+
+        <form method="get" action="/Settings/Index">
+            Value: 
+            <input type="text" value="" name="value" placeholder="Filter by value" autocomplete="off" />
+            <input type="submit" value="search" />
+        </form><br />
+
         <table class="table">
             <tr>
                 <th>
