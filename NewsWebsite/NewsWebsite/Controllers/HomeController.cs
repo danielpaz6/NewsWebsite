@@ -20,6 +20,13 @@ namespace NewsWebsite.Controllers
             {
                 var userId = User.Identity.GetUserId();
                 ApplicationUser user = db.Users.SingleOrDefault(x => x.Id.Equals(userId));
+
+                if(user == null) // If we enter this condition, it means that the user has been deleted but the cookies/session is still alive.
+                {
+                    // Log off ( remove cookies & session )
+                    HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                    return RedirectToAction("Index", "Home");
+                }
                 
                 if(user.StatsLastUpdate == null || (DateTime.Now - user.StatsLastUpdate).Value.Days >= 1)
                 {
@@ -92,6 +99,10 @@ namespace NewsWebsite.Controllers
                     db.SaveChanges();
                 }
             }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("User is not logged in.");
+            }
             
             return View();
         }
@@ -156,6 +167,14 @@ namespace NewsWebsite.Controllers
             {
                 var userId = User.Identity.GetUserId();
                 ApplicationUser user = db.Users.SingleOrDefault(x => x.Id.Equals(userId));
+
+                if (user == null) // If we enter this condition, it means that the user has been deleted but the cookies/session is still alive.
+                {
+                    // Log off ( remove cookies & session )
+                    HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                    return "";
+                }
+
                 List<Category> othersCategory = new List<Category>(db.Categories);
 
                 int categorySize = 0;

@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@model NewsWebsite.Models.LoginRegister
+@using Microsoft.AspNet.Identity
 @using NewsWebsite.Models
 @{
     /**/
@@ -74,7 +75,7 @@
                     </ul>
                 </div>
                 <a class="navbar-brand mx-auto order-1 order-md-3" href="/Home/Index">papør.io</a>
-                @Html.Partial("~/Views/Shared/_LoginPartial.cshtml", new NewsWebsite.Models.LoginRegister())
+                @Html.Partial("~/Views/Shared/_LoginPartial.cshtml")
             </div>
         </nav>
     </header>
@@ -89,8 +90,8 @@
                         <div class="card mb-4" style="border: 0;">
                             <div class="card-body">
                                 <!--<h4 class="card-title">About</h4>
-    <p class="card-text">Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam <a href="https://milo.bootlab.io/home-fullwidth.html#">semper libero</a>, sit amet adipiscing sem neque sed ipsum. </p>
-    -->
+                                <p class="card-text">Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam <a href="https://milo.bootlab.io/home-fullwidth.html#">semper libero</a>, sit amet adipiscing sem neque sed ipsum. </p>
+                                -->
                                 <h4 class="card-title">Weather</h4>
                                 @Html.Partial("~/Views/Shared/Weather.cshtml")
                             </div>
@@ -110,7 +111,7 @@
                         <div class="card mb-4" style="border: 0;">
                             <div class="card-body">
                                 <h4 class="card-title">Popular stories</h4>
-                                @foreach(var item in db.Articles.OrderByDescending(x => x.Date).Take(3))
+                                @foreach (var item in db.Articles.OrderByDescending(x => x.Date).Take(3))
                                 {
                                     <a href="#" class="d-inline-block">
                                         <h4 class="h6">@item.shortString(item.Title, 60)</h4>

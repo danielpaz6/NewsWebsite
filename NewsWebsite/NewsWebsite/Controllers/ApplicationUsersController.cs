@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using NewsWebsite.Extensions;
 using NewsWebsite.Models;
 
@@ -123,8 +124,32 @@ namespace NewsWebsite.Controllers
         {
             if (Request.IsAuthenticated && User.Identity.GetPermission() != 0) // Checks if the user is logged in and has access
             {
+                // reference to the user that we are about to delete
                 ApplicationUser applicationUser = db.Users.Find(id);
+
+                // delete all DistributionByCategory of the specific user that we are about to delete
+                applicationUser.DistributionByCategory.Clear();
+
+                // delete all the articles of the current user
+                var articles = db.Articles.ToList();
+                articles.RemoveAll(x => x.User == applicationUser);
+
+                // delete all the views of the current user
+                var views = db.Views.ToList();
+                views.RemoveAll(x => x.User == applicationUser);
+
+                // checking the case that the user deleting his own user
+                var userId = User.Identity.GetUserId();
+
+                if (userId == applicationUser.Id) // If we enter this condition, it means that the user has been deleted but the cookies/session is still alive.
+                {
+                    // Log off ( remove cookies & session )
+                    HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                }
+
+                // remove the user itself
                 db.Users.Remove(applicationUser);
+
                 db.SaveChanges();
             }
 

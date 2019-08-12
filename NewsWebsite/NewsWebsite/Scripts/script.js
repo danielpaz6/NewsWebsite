@@ -48,7 +48,16 @@
                 getNews(++counter);
             }
         }, 50);
-    });    $("#toggle_weather").click(function () {        $("#weather").toggle();
+    });    $(document).click(function (event) {
+        $target = $(event.target);
+        if (!$target.closest('#weather').length &&
+            $('#weather').is(":visible")) {
+            $('#weather').hide();
+        }
+    });    $("#toggle_weather").click(function () {        //$("#weather").show();
+        setTimeout(function (e) {
+            $('#weather').show();
+        }, 20);
     });    $("#myInput").keyup(function () {
         var value = $(this).val().toLowerCase();
 
@@ -87,7 +96,7 @@
     });
 
     $("#selectLocation").click(function () {
-        $("#locationSelected").toggle();
+        $("#locationSelected").show();
     });
 
     $(document).click(function () {
@@ -102,10 +111,10 @@
         $("#gmap_canvas").attr("src", "https://maps.google.com/maps?q="+$(this).html()+"&t=&z=13&ie=UTF8&iwloc=&output=embed");
     });
 
-    $.get("https://graph.facebook.com/v4.0/me?fields=id%2Cname%2Cposts&access_token=EAAdb2ZBoZCj40BAL6ZAvdAbnlHaahsvIiOPHmYFGoE9IZAYlLgOlIGJ0PPIDrM1n2M7q07ITekb8ZByNZBglDKCGDatkyFxXBaZBDpTvJNxf5akrh8PonwxPgnwUQ0hVLnABSoO60kuNXJv0pTIuuopd6f0wKDY4ZCNgBFPFuW606XmFpMo13xe7ctFlUrkjt6EZD", function (data) {
+    $.get("https://graph.facebook.com/v4.0/me?fields=id%2Cname%2Cposts&access_token=EAAdb2ZBoZCj40BAJp5joxN8Jq33uF7Uad2BUpwZB82QFcgXkvs35xRPoToeCyST4pDVyhef9bVUxlVUkbW8cGlnPjZB3hrQuXDkCaG0M92QvggfjW9BNZBmSuNmxpZAa8lkUFPAUSdCvL7KZAlXZBUJmNVuMBGhf5vVEdCtZBbfUeA8i9b0ZA1ZCOFuaZBK2LeQK0oT5LoOlhMZCzhQZDZD", function (data) {
         var size = data.posts.data.length > 3 ? 3 : data.posts.data.length;
         for (var i = 0; i < size; i++) {
-            var date = new Date(parseInt(data.posts.data[i].created_time));
+            //var date = new Date(parseInt(data.posts.data[i].created_time));
             var string =
                 '<div class="card text-white bg-primary mb-3" style="border-radius: 3px; max-width: 18rem; margin-left: 20px;">' +
                 '<div class="card-body">' +

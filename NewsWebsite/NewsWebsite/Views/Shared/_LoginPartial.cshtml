@@ -1,17 +1,18 @@
 ﻿@using Microsoft.AspNet.Identity
 @using NewsWebsite.Models
 @using NewsWebsite.Extensions
-@*model Tuple<NewsWebsite.Models.RegisterViewModel, NewsWebsite.Models.LoginViewModel>*@
-@model LoginRegister
+@*@model Tuple<NewsWebsite.Models.RegisterViewModel, NewsWebsite.Models.LoginViewModel>*@
+@*@model NewsWebsite.Models.RegisterViewModel*@
+@*@model NewsWebsite.Models.RegisterViewModel*@
+@model NewsWebsite.Models.LoginRegister
 
 
 <div class="collapse navbar-collapse order-4 order-md-4" id="navbar">
     @if (!Request.IsAuthenticated)
     {
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">Sign Up/In</a>
-            </li>
+            <li class="nav-item"><a class="nav-link" href="/Home/Contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">Sign Up/In</a></li>
         </ul>
 
         <!-- ------------- -->
@@ -137,26 +138,26 @@
             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
             {
                 @Html.AntiForgeryToken()
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/Home/Contact">Contact</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.GetUserName()</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown02">
-                        @Html.ActionLink("My Profile", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
-                        @if (User.Identity.GetPermission() != 0)
-                        {
-                            <a class="dropdown-item" href="/Categories/Index">Manage Categories</a>
-                            <a class="dropdown-item" href="/Articles/Index">Manage Articles</a>
-                            <a class="dropdown-item" href="/Settings/Index">Manage Settings</a>
-                            <a class="dropdown-item" href="/ApplicationUsers/Index">Manage Users</a>
-                            <a class="dropdown-item" href="/Statistics/Index">Statistics</a>
-                        }
-                        <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-                    </div>
-                </li>
-            </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Contact">Contact</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.GetUserName()</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown02">
+                            @Html.ActionLink("My Profile", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
+                            @if (User.Identity.GetPermission() != 0)
+                            {
+                                <a class="dropdown-item" href="/Categories/Index">Manage Categories</a>
+                                <a class="dropdown-item" href="/Articles/Index">Manage Articles</a>
+                                <a class="dropdown-item" href="/Settings/Index">Manage Settings</a>
+                                <a class="dropdown-item" href="/ApplicationUsers/Index">Manage Users</a>
+                                <a class="dropdown-item" href="/Statistics/Index">Statistics</a>
+                            }
+                            <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                        </div>
+                    </li>
+                </ul>
             }
         </ul>
     }
