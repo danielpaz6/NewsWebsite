@@ -99,7 +99,7 @@ namespace NewsWebsite.Models
 
         public List<string[]> Add_FOX_News()
         {
-            string url = "https://www.foxnews.com/about/rss";
+            string url = "http://feeds.foxnews.com/foxnews/latest";
             XmlReader reader = XmlReader.Create(url);
             SyndicationFeed feeds = SyndicationFeed.Load(reader); // References -> Right Click -> Add Reference -> System.ServiceModel
             reader.Close();

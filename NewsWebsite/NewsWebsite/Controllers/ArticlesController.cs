@@ -223,7 +223,7 @@ namespace NewsWebsite.Controllers
 
             if (amount < 5 || amount > 50)
                 ViewBag.Errors.Add("not a valid amount");
-
+            
             if (ViewBag.Errors.Count > 0)
                 return RedirectToAction("Index");
 
