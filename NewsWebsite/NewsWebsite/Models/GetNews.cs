@@ -72,9 +72,9 @@ namespace NewsWebsite.Models
                 string link = item.Links[0].Uri.ToString();
                 string img = null;
                 string desc = null;
-                string pattern1 = @"2";
-                string pattern2 = @"2";
+                string pattern1 = "src='([^']*)'";
 
+                desc = summary.Split(new string[] { "</div>" }, StringSplitOptions.None)[1];
                 RegexOptions options = RegexOptions.Multiline;
 
                 foreach (Match m in Regex.Matches(summary, pattern1, options))
@@ -82,10 +82,7 @@ namespace NewsWebsite.Models
                     img = m.Groups[1].ToString();
                 }
 
-                foreach (Match m in Regex.Matches(summary, pattern2, options))
-                {
-                    desc = m.Groups[1].ToString();
-                }
+             
 
                 temp[0] = subject;
                 temp[1] = desc;
