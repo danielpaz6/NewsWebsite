@@ -11,77 +11,107 @@ else
 {
     if (!ViewBag.isSearched)
     {
-        <div class="card-body">
-            <header>
-                <h3 class="card-title">Advanced Search</h3><br />
-            </header>
-            <form id="needs-validation" novalidate="" action="/Search/Index" method="get">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="validationCustom01">Article's title</label>
-                        <input type="text" class="form-control" id="validationCustom01" placeholder="Part of the title" name="title" autocomplete="off">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="validationCustom02">Article's author</label>
-                        <input type="text" class="form-control" id="validationCustom02" placeholder="e.g. Mark" name="author" autocomplete="off">
+    <div class="card-body">
+        <header>
+            <h3 class="card-title">Advanced Article Search</h3><br />
+        </header>
+        <form id="needs-validation" novalidate="" action="/Search/Index" method="get">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="validationCustom01">Article's title</label>
+                    <input type="text" class="form-control" id="validationCustom01" placeholder="Part of the title" name="title" autocomplete="off">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="validationCustom02">Article's author</label>
+                    <input type="text" class="form-control" id="validationCustom02" placeholder="e.g. Mark" name="author" autocomplete="off">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="validationCustom03">Part of the description</label>
+                    <input type="text" class="form-control" id="validationCustom03" placeholder="Part of the description" name="desc" autocomplete="off">
+                    <div class="invalid-feedback">
+                        Please provide a valid description.
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="validationCustom03">Part of the description</label>
-                        <input type="text" class="form-control" id="validationCustom03" placeholder="Part of the description" name="desc" autocomplete="off">
-                        <div class="invalid-feedback">
-                            Please provide a valid description.
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationCustom04">Category</label>
-                        <select name="category" id="inputState" class="form-control">
-                            <option value="">Choose...</option>
-                            @foreach (var item in ViewBag.Categories)
-                            {
-                                <option value="@item.CategoryId">@item.Name</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationCustom05">Source</label>
-                        <input type="text" class="form-control" id="validationCustom05" placeholder="e.g. CNN" name="source" autocomplete="off">
-                    </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationCustom04">Category</label>
+                    <select name="category" id="inputState" class="form-control">
+                        <option value="">Choose...</option>
+                        @foreach (var item in ViewBag.Categories)
+                        {
+                            <option value="@item.CategoryId">@item.Name</option>
+                        }
+                    </select>
                 </div>
-                <br />
-                <button class="btn btn-primary" type="submit">Search</button>
-                <button class="btn btn-primary" type="reset">Clear form</button>
-            </form>
+                <div class="col-md-3 mb-3">
+                    <label for="validationCustom05">Source</label>
+                    <input type="text" class="form-control" id="validationCustom05" placeholder="e.g. CNN" name="source" autocomplete="off">
+                </div>
+            </div>
+            <br />
+            <button class="btn btn-primary" type="submit">Search</button>
+            <button class="btn btn-primary" type="reset">Clear form</button>
+        </form>
 
-            <script>
-                // Example starter JavaScript for disabling form submissions if there are invalid fields
-                (function () {
-                    'use strict';
+        <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function () {
+                'use strict';
 
-                    window.addEventListener('load', function () {
-                        var form = document.getElementById('needs-validation');
-                        form.addEventListener('submit', function (event) {
-                            if (form.checkValidity() === false) {
-                                event.preventDefault();
-                                event.stopPropagation();
-                            }
-                            form.classList.add('was-validated');
-                        }, false);
+                window.addEventListener('load', function () {
+                    var form = document.getElementById('needs-validation');
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
                     }, false);
-                })();
+                }, false);
+            })();
 
-                $(function () {
-                    $("form").submit(function () {
-                        $(this).find(":input").filter(function () { return !this.value; }).attr("disabled", "disabled");
-                        return true; // ensure form still submits
-                    });
-
-                    // Un-disable form fields when page loads, in case they click back after submission
-                    $("form").find(":input").prop("disabled", false);
+            $(function () {
+                $("form").submit(function () {
+                    $(this).find(":input").filter(function () { return !this.value; }).attr("disabled", "disabled");
+                    return true; // ensure form still submits
                 });
-            </script>
-        </div>
+
+                // Un-disable form fields when page loads, in case they click back after submission
+                $("form").find(":input").prop("disabled", false);
+            });
+        </script>
+
+        <br /><br /><br /><br />
+
+        <!-- Users search -->
+
+        <h3 class="card-title">Users Search</h3>    
+        <form id="needs-validation" novalidate="" action="/Search/Users" method="get">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="validationCustom01">User's Name</label>
+                    <input type="text" class="form-control" id="validationCustom01" placeholder="e.g. Mark" name="username" autocomplete="off">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="validationCustom02">User's Email</label>
+                    <input type="text" class="form-control" id="validationCustom02" placeholder="e.g. email@gmail.com" name="email" autocomplete="off">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="validationCustom03">User's Permission</label>
+                    <input type="number" min="0" max="1" step="1" value="0" class="form-control" id="validationCustom03" placeholder="e.g. 1" name="permission" autocomplete="off">
+                    <div class="invalid-feedback">
+                        Please provide a valid description.
+                    </div>
+                </div>
+            </div>
+            <br />
+            <button class="btn btn-primary" type="submit">Search</button>
+            <button class="btn btn-primary" type="reset">Clear form</button>
+        </form>
+    </div>
     }
     else
     {

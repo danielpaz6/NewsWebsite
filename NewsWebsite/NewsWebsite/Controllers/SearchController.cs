@@ -60,5 +60,21 @@ namespace NewsWebsite.Controllers
                 return View(query.ToList());
             }
         }
+
+        // GET: Users Search
+        public ActionResult Users(string username, string email, int? permission)
+        {
+            var query = from m in db.Users select m;
+            if (!String.IsNullOrEmpty(username))
+                query = query.Where(x => x.UserName.Contains(username));
+
+            if (!String.IsNullOrEmpty(email))
+                query = query.Where(x => x.Email.Contains(email));
+
+            if (permission != null)
+                query = query.Where(x => x.Permission == permission);
+
+            return View(query.ToList());
+        }
     }
 }

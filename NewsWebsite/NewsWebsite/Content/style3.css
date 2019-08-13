@@ -1,4 +1,9 @@
-﻿.card {
+﻿@font-face {
+    font-family: sansation;
+    src: url(/Resources/Sansation_Light.woff);
+}
+
+.card {
     padding: 0 !important;
 }
 

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<NewsWebsite.Models.ApplicationUser>
+@using NewsWebsite.Extensions
+
+@{
+    ViewBag.Title = "Users Search";
+}
+
+@if (!Request.IsAuthenticated)
+{
+    <span>Sorry, you must login in order to access this page.</span>
+}
+else
+{
+    if (User.Identity.GetPermission() == 0)
+    {
+        <span>Sorry, you don't have access to reach this page.</span>
+    }
+    else
+    {
+        <h2>@ViewBag.Title</h2>
+
+        if(Model.Count() > 0)
+        {
+            <h6>Results we manage to find:</h6>
+            foreach(var item in Model)
+            {
+                <span>@item.UserName</span><br />
+            }
+        }
+        else
+        {
+            <span>No Results.</span>
+        }
+
+
+    }
+}

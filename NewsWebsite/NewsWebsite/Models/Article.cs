@@ -50,7 +50,15 @@ namespace NewsWebsite.Models
                 }
             }
 
-            return "Last updated at " + (DateTime.Now - time).ToString("MMMM dd, yyyy");
+            //System.Diagnostics.Debug.WriteLine(DateTime.Now + " --- " + time);
+            try
+            {
+                return "Last updated at " + (DateTime.Now - time).ToString("MMMM dd, yyyy");
+            }
+            catch (Exception e)
+            {
+                return "Last updated at unknown";
+            }
         }
     }
 }
