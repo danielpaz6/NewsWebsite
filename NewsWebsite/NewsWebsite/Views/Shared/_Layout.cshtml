@@ -100,11 +100,10 @@
                         <div class="card mb-4" style="border: 0;">
                             <div class="card-body">
                                 <h4 class="card-title">Tags</h4>
-                                <a class="btn btn-light btn-sm mb-1" href="#">Journey</a>
-                                <a class="btn btn-light btn-sm mb-1" href="#">Work</a>
-                                <a class="btn btn-light btn-sm mb-1" href="#">Lifestype</a>
-                                <a class="btn btn-light btn-sm mb-1" href="#">Photography</a>
-                                <a class="btn btn-light btn-sm mb-1" href="#">Food &amp; Drinks</a>
+                                @foreach (var item in db.Categories)
+                                {
+                                    <a class="btn btn-light btn-sm mb-1" href="/Search/Index?category=@item.CategoryId">@item.Name</a>
+                                }
                             </div>
                         </div><!-- /.card -->
                         <div class="card mb-4" style="border: 0;">
@@ -112,11 +111,12 @@
                                 <h4 class="card-title">Popular stories</h4>
                                 @foreach (var item in db.Articles.OrderByDescending(x => x.Date).Take(3))
                                 {
-                                    <a href="#" class="d-inline-block">
-                                        <h4 class="h6">@item.shortString(item.Title, 60)</h4>
-                                    </a>
+                                <!--<a href="#" class="d-inline-block">-->
+                                <a class="d-inline-block openLink" val="@item.ArticleId" target="_blank" href="@item.ArticleLink">
+                                    <h4 class="h6">@item.shortString(item.Title, 60)</h4>
+                                </a>
 
-                                    <time class="timeago" datetime="@item.lastUpdated(item.Date)">@item.lastUpdated(item.Date)</time> @:in Lifestyle<br /><br />
+                                    <time class="timeago" datetime="@item.lastUpdated(item.Date)">@item.lastUpdated(item.Date)</time><br /><br />
                                 }
                             </div>
                         </div><!-- /.card -->

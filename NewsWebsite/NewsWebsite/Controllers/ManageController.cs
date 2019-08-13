@@ -75,6 +75,9 @@ namespace NewsWebsite.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             } };
 
+            ViewBag.TotalViews = db.Views.Where(x => x.User.Id == userId).Count();
+            ViewBag.TotalPosts = db.Articles.Where(x => x.User.Id == userId).Count();
+
             return View(model);
         }
 
