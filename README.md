@@ -55,3 +55,82 @@ and used ```Google API``` and ```Facebook API``` in order to make more ways to l
   <img src="/src/login.png" width="400">
 </p>
 
+## Add RSS Articles Feature
+
+The manager has 2 options for adding new articles to the site: either manually or using additional buttons to choose which RSS to add articles to and which category this belongs and how many to add, for example:
+
+
+<p align="center">
+  <img src="/src/rssadd.png" width="750">
+</p>
+
+And this was done by using many technologies such as ```XmlReader``` ```SyndicationFeed``` so we could read and interpret the RSS of the different news websites.
+And by clicking on any of these buttons will lead to this code to active: (CNN RSS Example)
+
+```csharp
+string url = "http://rss.cnn.com/rss/edition.rss";
+XmlReader reader = XmlReader.Create(url);
+SyndicationFeed feeds = SyndicationFeed.Load(reader);
+reader.Close();
+List<String[]> lst = new System.Collections.Generic.List<string[]>();
+var ns = (XNamespace)"http://search.yahoo.com/mrss/";
+foreach (SyndicationItem item in feeds.Items)
+{
+	String[] temp = new String[4];
+	if (item.Summary == null)
+		continue;
+
+	string subject = item.Title.Text;
+	string summary = item.Summary.Text;
+	string link = item.Links[0].Uri.ToString();
+
+	var urls = from ext in item.ElementExtensions  // all extensions to ext
+			   where ext.OuterName == "group" &&    // find the ones called group
+					 ext.OuterNamespace == ns       // in the right namespace
+			   from content in ext.GetObject<XElement>().Elements(ns + "content")
+			   where (string)content.Attribute("medium") == "image" // if that medium is an image
+			   select (string)content.Attribute("url");
+
+	if (urls.Count() < 5)
+		continue;
+
+	string img = urls.ToArray()[3];
+
+	temp[0] = subject;
+	temp[1] = summary;
+	temp[2] = link;
+	temp[3] = img;
+
+	lst.Add(temp);
+}
+```
+
+and in the end of the foreach, we have a list of all the articles so we could add them to our database.
+
+## Statistics
+
+The site also supports a page where statistics about the various users and articles are available so that the site administrators can view them.
+
+<p align="center">
+  <img src="/src/statistics.png">
+</p>
+
+And this is done by using d3js ( https://d3js.org/ ).
+
+
+## Other technologies & features
+
+* HTML5 including: Video, Canvas Aside, Footer, Header, Nav, Section and some more.
+* CSS3 including: Text-shadow, Transition, Multiple-columns, Font-face, Border-radius.
+* Facebook, Google API and some Weather API.
+* Javascript, jQuery and Ajax.
+* Advanced queries such as Group By and Join between several tables.
+* Advanced Search filtering by several parameters.
+* Implemented in MVC.
+
+## Authors
+
+**Daniel Paz** - *Part of the project program* - [Profile](https://github.com/DanielPaz6)
+**Opal Koren** - *Part of the project program* - [Profile](https://github.com/OpalKo93/)
+**Or Mizrahi** - *Part of the project program* - [Profile](https://github.com/OrMizrahi/)
+**Omer Nahum** - *Part of the project program* - [Profile](https://github.com/OmerNahum/)
