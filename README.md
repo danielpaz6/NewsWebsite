@@ -51,9 +51,6 @@ In order to build the user system part of the site, we used ASP.NET Identity whe
 Moreover, we implemented a nice popup window once you clicked on the "login" panel ( via jQuery )
 and used ```Google API``` and ```Facebook API``` in order to make more ways to login to the website. Example:
 
-<p align="center">
-  <img src="/src/login.png" width="400">
-</p>
 
 ## Add RSS Articles Feature
 
