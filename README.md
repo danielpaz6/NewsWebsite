@@ -130,7 +130,7 @@ And this is done by using d3js ( https://d3js.org/ ).
 
 ## Authors
 
-**Daniel Paz** - *Part of the project program* - [Profile](https://github.com/DanielPaz6)
-**Opal Koren** - *Part of the project program* - [Profile](https://github.com/OpalKo93/)
-**Or Mizrahi** - *Part of the project program* - [Profile](https://github.com/OrMizrahi/)
+**Daniel Paz** - *Part of the project program* - [Profile](https://github.com/DanielPaz6)<br />
+**Opal Koren** - *Part of the project program* - [Profile](https://github.com/OpalKo93/)<br />
+**Or Mizrahi** - *Part of the project program* - [Profile](https://github.com/OrMizrahi/)<br />
 **Omer Nahum** - *Part of the project program* - [Profile](https://github.com/OmerNahum/)
