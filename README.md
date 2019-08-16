@@ -43,7 +43,7 @@ So we want the following distribution articles to look like this:
 
 It is important to note that we will multiply both 0.8 and 0.2 in ```ArticlesPerPage``` so that we get a proper ratio.
 
-Another nice feature is that when the user scrolls across 80% of the page, more articles are opened to him, which is done via AJAX.
+Another nice feature is that when the user scrolls across 50%-80% ( depends how many pages were already opened ) of the page, more articles are opened, which is done via AJAX.
 
 ## Users & Login system
 
