@@ -32,32 +32,32 @@ namespace NewsWebsite.Models
         {
             double newTime = (DateTime.Now - time).TotalMinutes;
             if(newTime <= 1)
-                return "Last updated just now";
+                return "just now";
             else if(newTime > 1 && newTime < 60 )
-                return "Last updated " + (int)newTime + " mins ago";
+                return "" + (int)newTime + " mins ago";
             else if(newTime >= 60 && newTime < 1440)
             {
-                return "Last updated " + (int)(newTime/60) + " hours ago";
+                return "" + (int)(newTime/60) + " hours ago";
             }
             else if(newTime >= 1440)
             {
                 var newDays = (DateTime.Now - time).TotalDays;
                 if (newDays <= 1)
-                    return "Last updated one day ago";
+                    return "One day ago";
                 else if(newDays > 1 && newDays <= 7)
                 {
-                    return "Last updated " + (int)newDays + " days ago";
+                    return "" + (int)newDays + " days ago";
                 }
             }
 
             //System.Diagnostics.Debug.WriteLine(DateTime.Now + " --- " + time);
             try
             {
-                return "Last updated at " + (DateTime.Now - time).ToString("MMMM dd, yyyy");
+                return "" + (DateTime.Now - time).ToString("MMMM dd, yyyy");
             }
             catch (Exception e)
             {
-                return "Last updated at unknown";
+                return time.ToString();
             }
         }
     }

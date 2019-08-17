@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -11,6 +12,17 @@ namespace NewsWebsite.Models
 {
     public class GetNews
     {
+        private static int NextInt(int min, int max)
+        {
+            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+            byte[] buffer = new byte[4];
+
+            rng.GetBytes(buffer);
+            int result = BitConverter.ToInt32(buffer, 0);
+
+            return new Random(result).Next(min, max);
+        }
+
         public List<string[]> Add_CNN_News()
         {
             string url = "http://rss.cnn.com/rss/edition.rss";
@@ -44,7 +56,9 @@ namespace NewsWebsite.Models
                 Random rnd = new Random();
 
                 string img = "";
-                if (rnd.Next(1, 5) != 3)
+                int rand = GetNews.NextInt(1, 5);
+                System.Diagnostics.Debug.WriteLine("Your random: " + rand);
+                if (rand != 3)
                 {
                     img = urls.ToArray()[3];
                     flag = false;

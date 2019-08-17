@@ -18,10 +18,45 @@
     function getNews(page) {
         $.post("/Home/GetArticles", { pageIndex: page })
             .done(function (data) {
-                if(page > 1)
-                    $("#articles").append(data);
-                else
-                    $("#articles").html(data);
+                data = JSON.parse(data);
+                $("#articles-loading").hide();
+                var len = data.length;
+                var list = [
+                    data.slice(0, len / 3),
+                    data.slice(len / 3, 2 * len / 3),
+                    data.slice(2 * len / 3, len)
+                ];
+
+                for (var i = 0; i < list.length; i++) {
+                    for (var j = 0; j < list[i].length; j++) {
+                        var row = '<article class="card mb-4">' +
+                            '<header class="card-header">' +
+                            '<div class="card-meta">' +
+                            '<a href="#"><time class="timeago" datetime="' + list[i][j][0] + '">' + list[i][j][1] + '</time></a> in <a href="/Search/Index?Category=' + list[i][j][2] + '">' + list[i][j][3] + '</a>' +
+                            '</div>' +
+                            '<a href="#">' +
+                            '<h4 class="card-title">' + list[i][j][5] + '</h4>' +
+                            '</a>' +
+                            '</header>';
+
+                        if(list[i][j][8] == "Normal")
+                            row = row + '<a href="post-image.html">' +
+                            '<img class="card-img" src="' + list[i][j][6] + '" alt="">' +
+                                '</a>';
+                        else
+                            row = row + '<a href="post-image.html" style="overflow: hidden;">' +
+                                '<img class="card-img" src="' + list[i][j][6] + '" alt="" style="margin-left: 10px;">' +
+                                '</a>';
+
+                        row = row + '<div class="card-body">' +
+                            '<p class="card-text">' + list[i][j][7] + '</p>' +
+                            '</div>' +
+                            '</article>';
+
+                        $("#articles-col" + (i + 1)).append(row);
+                    }
+                }
+
             });
     }
 
@@ -48,17 +83,24 @@
                 getNews(++counter);
             }
         }, 50);
-    });    $(document).click(function (event) {
+    });
+
+    $(document).click(function (event) {
         $target = $(event.target);
         if (!$target.closest('#weather').length &&
             $('#weather').is(":visible")) {
             $('#weather').hide();
         }
-    });    $("#toggle_weather").click(function () {        //$("#weather").show();
+    });
+
+    $("#toggle_weather").click(function () {
+        //$("#weather").show();
         setTimeout(function (e) {
             $('#weather').show();
         }, 20);
-    });    $("#myInput").keyup(function () {
+    });
+
+    $("#myInput").keyup(function () {
         var value = $(this).val().toLowerCase();
 
         if (value == "") {
@@ -71,7 +113,9 @@
 
             $('#weather a:visible').hide().filter(':lt(7)').show();
         }
-    });    // hide all a and then show the first two
+    });
+
+    // hide all a and then show the first two
     $('#weather a').hide().filter(':lt(0)').show();
 
     function getWeather(city) {
@@ -89,7 +133,11 @@
             $("#weather_country").html(data.sys.country == "PS" ? "IL" : data.sys.country);
 
             $("#show_weather").show();
-        });    }    getWeather("Holon");
+        });
+    }
+
+    getWeather("Holon");
+
     $('#weather a').click(function () {
         getWeather($(this).html());
         $("#weather").hide();

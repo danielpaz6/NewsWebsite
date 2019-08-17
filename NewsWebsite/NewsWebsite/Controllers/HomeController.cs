@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace NewsWebsite.Controllers
 {
@@ -202,14 +204,14 @@ namespace NewsWebsite.Controllers
 
                 articles = list.SelectMany(x => x).ToList();
             }
-            
-            // --------- Displaying the articles list
-            StringBuilder s = new StringBuilder();
 
-            foreach(var article in articles)
+            // --------- Displaying the articles list
+            //StringBuilder s = new StringBuilder();
+
+            /*foreach(var article in articles)
             {
-                s.Append("<div class=\"card\">"+
-                "<img class=\"card-img-top img-fluid\" src=\""+article.ImageLink + "\" alt=\"Card image cap\">"+
+                /*s.Append("<div class=\"card\">"+
+                "<img class=\"card-img-top img-fluid\" src=\"" + article.ImageLink + "\" alt=\"Card image cap\">"+
                 "<div class=\"card-block\">"+
                     "<h5 class=\"card-title fixed-font\"><a class=\"openLink\" val=\""+article.ArticleId+"\" target=\"_blank\" href=\""+article.ArticleLink+"\">"+article.Title+"</a></h5>"+
                     "<p class=\"card-text fixed-fontsize\">"+article.Description+"</p>"+
@@ -217,10 +219,67 @@ namespace NewsWebsite.Controllers
                 "<div class=\"card-footer\">"+
                     "<small class=\"text-muted\">"+article.lastUpdated(article.Date)+"</small>"+
                 "</div>"+
-                "</div>");
-            }
+                "</div>");*/
 
-            return s.ToString();
+            /*s.Append("" +
+          "<div class=\"card mb-4\">" +
+            "<header class=\"card-header\">" +
+              "<div class=\"card-meta\">" +
+                "<a href=\"#\"><time class=\"timeago\" datetime=\""+ article.Date + "\">"+ article.lastUpdated(article.Date) + "</time></a> in <a href=\"page-category.html\">Journey</a>" +
+              "</div>" +
+              "<a class=\"openLink\" target=\"_blank\" href=\"" + article.ArticleLink + "\">" +
+                "<h4 class=\"card-title\">"+ article.Title + "</h4>" +
+              "</a>" +
+            "</header>" +
+            "<a href=\"#\">" +
+              "<img class=\"card-img\" src=\""+ article.ImageLink + "\" alt=\"\">" +
+            "</a>" +
+            "<div class=\"card-body\">" +
+              "<p class=\"card-text\">"+ article.Description + "</p>" +
+            "</div>");*/
+            //}
+
+            //JavaScriptSerializer jss = new JavaScriptSerializer();
+            //string output = jss.Serialize(articles);
+
+            List<List<string>> jsonList = new List<List<string>>();
+            Dictionary<int, string> map = new Dictionary<int, string>();
+
+            articles.ToList().ForEach(delegate (Article article)
+            {
+                List<string> tmpList = new List<string>();
+
+                tmpList.Add(article.Date.ToString()); // 0
+                tmpList.Add(article.lastUpdated(article.Date)); // 1
+                tmpList.Add(article.CategoryId + ""); // 2
+                
+                if(map.ContainsKey(article.CategoryId))
+                    tmpList.Add(map[article.CategoryId]); // 3
+                else
+                {
+                    string s = db.Categories.Find(article.CategoryId).Name;
+                    tmpList.Add(s); // 3
+                    map.Add(article.CategoryId, s);
+                }
+
+
+                tmpList.Add(article.ArticleLink); // 4
+                tmpList.Add(article.Title); // 5
+                tmpList.Add(article.ImageLink); // 6
+                tmpList.Add(article.Description); // 7
+
+                if (article.Source == "CNN" && article.ImageLink.Contains("vertical-gallery"))
+                    tmpList.Add("Right"); // 8
+                else
+                    tmpList.Add("Normal"); // 8
+
+
+                jsonList.Add(tmpList);
+
+            });
+
+            //return JsonConvert.SerializeObject(jsonList);
+            return new JavaScriptSerializer().Serialize(jsonList);
             
         }
     }
