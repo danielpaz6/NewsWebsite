@@ -111,7 +111,7 @@
         $("#gmap_canvas").attr("src", "https://maps.google.com/maps?q="+$(this).html()+"&t=&z=13&ie=UTF8&iwloc=&output=embed");
     });
 
-    $.get("https://graph.facebook.com/v4.0/me?fields=id%2Cname%2Cposts&access_token=EAAdb2ZBoZCj40BAJp5joxN8Jq33uF7Uad2BUpwZB82QFcgXkvs35xRPoToeCyST4pDVyhef9bVUxlVUkbW8cGlnPjZB3hrQuXDkCaG0M92QvggfjW9BNZBmSuNmxpZAa8lkUFPAUSdCvL7KZAlXZBUJmNVuMBGhf5vVEdCtZBbfUeA8i9b0ZA1ZCOFuaZBK2LeQK0oT5LoOlhMZCzhQZDZD", function (data) {
+    $.get("https://graph.facebook.com/v4.0/me?fields=id%2Cname%2Cposts&access_token=EAAdb2ZBoZCj40BALKHJZBI4oja7Bd58d9MuQymZBbMkshJaomU1UySyf9iJoI9AM6BejZASxMuZAyC4FbiEAFoZBVNAdnJXaZBK3sO4F3MW8hhdJsD0rJJVb5HSTv1vmuItPhySXdQqyJ5vLiYcriZA1MnLXjGHmHJZBKUaEEQoommrA1DpPZAME1EPOsJtAPfF1vgZD", function (data) {
         var size = data.posts.data.length > 3 ? 3 : data.posts.data.length;
         for (var i = 0; i < size; i++) {
             //var date = new Date(parseInt(data.posts.data[i].created_time));

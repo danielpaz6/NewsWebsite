@@ -19,6 +19,8 @@ namespace NewsWebsite.Models
             reader.Close();
             List<String[]> lst = new System.Collections.Generic.List<string[]>();
             var ns = (XNamespace)"http://search.yahoo.com/mrss/";
+
+            bool flag = false;
             foreach (SyndicationItem item in feeds.Items)
             {
                 String[] temp = new String[4];
@@ -39,7 +41,27 @@ namespace NewsWebsite.Models
                 if (urls.Count() < 5)
                     continue;
 
-                string img = urls.ToArray()[3];
+                Random rnd = new Random();
+
+                string img = "";
+                if (rnd.Next(1, 5) != 3)
+                {
+                    img = urls.ToArray()[3];
+                    flag = false;
+                }
+                else
+                {
+                    if (flag == false)
+                    {
+                        img = urls.ToArray()[6];
+                        flag = true;
+                    }
+                    else
+                    {
+                        img = urls.ToArray()[3];
+                        flag = false;
+                    }
+                }
 
                 temp[0] = subject;
                 temp[1] = summary;
@@ -81,8 +103,6 @@ namespace NewsWebsite.Models
                 {
                     img = m.Groups[1].ToString();
                 }
-
-             
 
                 temp[0] = subject;
                 temp[1] = desc;
