@@ -15,6 +15,7 @@
         }, function () {});
     });
 
+    var newsCount = 0;
     function getNews(page) {
         $.post("/Home/GetArticles", { pageIndex: page })
             .done(function (data) {
@@ -53,7 +54,7 @@
                             '</div>' +
                             '</article>';
 
-                        $("#articles-col" + (i + 1)).append(row);
+                        $("#articles-col" + ((newsCount++ % 3) + 1)).append(row);
                     }
                 }
 

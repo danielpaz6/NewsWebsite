@@ -196,9 +196,13 @@ namespace NewsWebsite.Controllers
                 }
 
                 //for(int i = (int)Math.Ceiling(0.2 * articlesPerPage); i <= articlesPerPage; i++)
-                foreach(var category in othersCategory)
+                double percent2 = user.DistributionByCategory.Count() == 0 ? articlesPerPage : 0.2 * articlesPerPage;
+                foreach (var category in othersCategory)
                 {
-                    int limit = (int)(Math.Ceiling(0.2 * articlesPerPage) / (double)othersCategory.Count());
+                    System.Diagnostics.Debug.WriteLine("Math.Ceiling(percent2) / (double)othersCategory.Count():");
+                    System.Diagnostics.Debug.WriteLine(Math.Ceiling(percent2) / (double)othersCategory.Count());
+                    System.Diagnostics.Debug.WriteLine("percent2: " + percent2);
+                    int limit = (int)Math.Ceiling((Math.Ceiling(percent2) / (double)othersCategory.Count()));
                     list.Add(db.Articles.Where(item => item.CategoryId == category.CategoryId).OrderBy(x => x.Date).Skip((pageIndex - 1) * limit).Take(limit).ToList());
                 }
 
@@ -266,7 +270,7 @@ namespace NewsWebsite.Controllers
                 tmpList.Add(article.ArticleLink); // 4
                 tmpList.Add(article.Title); // 5
                 tmpList.Add(article.ImageLink); // 6
-                tmpList.Add(article.Description); // 7
+                tmpList.Add(article.shortString(article.Description, 300)); // 7
 
                 if (article.Source == "CNN" && article.ImageLink.Contains("vertical-gallery"))
                     tmpList.Add("Right"); // 8

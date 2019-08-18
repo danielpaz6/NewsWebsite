@@ -57,7 +57,6 @@ namespace NewsWebsite.Models
 
                 string img = "";
                 int rand = GetNews.NextInt(1, 5);
-                System.Diagnostics.Debug.WriteLine("Your random: " + rand);
                 if (rand != 3)
                 {
                     img = urls.ToArray()[3];
@@ -125,6 +124,43 @@ namespace NewsWebsite.Models
 
                 lst.Add(temp);
             }
+            return lst;
+        }
+
+        public List<string[]> Add_Photography_News()
+        {
+            string url = "https://rss.app/feeds/cW8bDXFgCPsqSWIf.xml";
+            XmlReader reader = XmlReader.Create(url);
+            SyndicationFeed feeds = SyndicationFeed.Load(reader);
+            reader.Close();
+            List<String[]> lst = new System.Collections.Generic.List<string[]>();
+            var ns = (XNamespace)"http://search.yahoo.com/mrss/";
+
+            foreach (SyndicationItem item in feeds.Items)
+            {
+                String[] temp = new String[4];
+                if (item.Summary == null)
+                    continue;
+
+                string subject = item.Title.Text;
+                string summary = item.Summary.Text;
+
+                // Gets Image
+                string pattern = @"src=""([^""]*)""";
+                RegexOptions options = RegexOptions.Multiline;
+
+                string img = Regex.Matches(summary, pattern, options)[0].Groups[1].ToString().Trim();
+                string link = item.Links[0].Uri.ToString();
+                string desc = summary.Split(new string[] { "<div>" }, StringSplitOptions.None)[2].Replace("</div>", "").Trim();
+
+                temp[0] = subject;
+                temp[1] = desc;
+                temp[2] = link;
+                temp[3] = img;
+
+                lst.Add(temp);
+            }
+
             return lst;
         }
 

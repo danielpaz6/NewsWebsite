@@ -303,5 +303,52 @@ namespace NewsWebsite.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public ActionResult Photography_News(int cat, int amount)
+        {
+            ViewBag.Errors = new List<String>();
+            if (!Request.IsAuthenticated || User.Identity.GetPermission() == 0) // Checks if the user is logged in and has access
+                ViewBag.Errors.Add("Not logged in");
+
+            Category c = db.Categories.SingleOrDefault(x => x.CategoryId == cat);
+            if (c == null)
+                ViewBag.Errors.Add("Not valid category.");
+
+            if (amount < 5 || amount > 50)
+                ViewBag.Errors.Add("not a valid amount");
+
+            if (ViewBag.Errors.Count > 0)
+                return RedirectToAction("Index");
+
+            GetNews gn = new GetNews();
+            List<string[]> lst = gn.Add_Photography_News();
+
+            var userId = User.Identity.GetUserId();
+            ApplicationUser user = db.Users.SingleOrDefault(x => x.Id.Equals(userId));
+
+            int count = 0;
+            foreach (string[] str in lst)
+            {
+                if (count++ >= amount)
+                    break;
+
+                Article a = new Article();
+                a.ArticleLink = str[2];
+                a.Category = c;
+                a.Date = DateTime.Now;
+                a.Description = str[1];
+                a.ImageLink = str[3];
+                a.Title = str[0];
+                a.User = user;
+                a.NumOfLikes = 0;
+                a.Source = "philngyn";
+
+                if (!db.Articles.Any(x => x.ArticleLink.Equals(a.ArticleLink))) // checks if the article is already exists
+                    Create(a);
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
